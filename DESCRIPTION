@@ -1,0 +1,19 @@
+Package: TrendNPS
+Type: Package
+Title: NPS Trend Analyses for Survey Designs
+Version: 0.0.1
+Date: 2016-10-11
+Author: Leigh Ann Starcevich <lstarcevich@west-inc.com> [aut, cre]
+Maintainer: Jason Mitchell <jmitchell@west-inc.com>
+Description: Analyze complex survey designs via trend estimation.
+License: GNU General Public License
+BugReports: http://lar-git.west-inc.com/jasmyace/TrendNPS/issues
+Imports:
+    lmerTest,
+    spsurvey,
+    stats
+Depends: lme4
+NeedsCompilation: no
+Packaged: 2016-10-11 10:37:00 MDT; jmitchell
+LazyData: true
+RoxygenNote: 5.0.1

@@ -65,11 +65,12 @@
 #'   the design-based mean estimate's standard error assuming independent random
 #'   sampling.
 #'   
-#' @return A displayed vector containing the trend estimate, along with its standard
-#'   error, estimated variance components, and degrees of freedom used to test
-#'   for trend and calculate confidence intervals.
+#' @return A list containing three or four elements, depending on the specified trend method. 
+#'   The first element of the list contains a data frame containing the estimated intercept,  
+#'   trend estimate, trend standard error, estimated variance components, and degrees of freedom  
+#'   used for trend testing and confidence intervals construction.
 #'   
-#'   Additionally, a data frame containing each of 
+#'   The contents of the first list element, ModelEstimates, are:
 #'   
 #'   \tabular{rl}{
 #'   
@@ -84,10 +85,28 @@
 #'   
 #'   }
 #'   
-#' @details For long-term monitoring, \code{TrendNPS_Cont} assumes sampling 
-#'   occasions occur no more than once per unique record of \code{WYear} and 
-#'   \code{Site} in data frame \code{dat}.  [Tell people what to do to get 
-#'   around this?]
+#'   The contents of the second list element, TrendTest, include the trend coefficient on the logged scale, 
+#'   the trend standard error, the t-statistic, degrees of freedom, and p-value for a two-sided test of no trend.
+#'   
+#'   The contents of the third list element, TrendCI, include the back-transformed trend on the original scale 
+#'   calulated as an annual percent change and the lower and upper (1-alpha)*100%-confidence interval bounds. 
+#'   
+#'   A fourth list element, DBests, contains the annual design-based estimates and is returned only when the 
+#'   SLRDB and WLRDB trend approaches are used.  The design-based estimates may be used to assess the assumption
+#'   of independence for the linear regression models.  The output of the DBests list element include:
+#'   
+#'   \tabular{rl}{
+#'   
+#'   \code{Year}      \tab	Year of survey. \cr
+#'   \code{Est.Mean}   \tab	Design-based estimate of the mean of the outcome of interest. \cr
+#'   \code{SE} \tab	   Estimated standard error of the design-based mean estimate using the neighborhood variace estimator if nbhd = TRUE. \cr
+#'   \code{WYear}   \tab	WYear variable. \cr
+#'   \code{Resid}     \tab	Residuals from the linear model fit. \cr
+#'   
+#'   }
+#'   
+#' @details For long-term monitoring, \code{TrendNPS_Cont} assumes single annual sampling 
+#'   occasions per unique record of \code{WYear} and \code{Site} in data frame \code{dat}.  
 #'   
 #'   Sampling (\code{stage1wt}) and temporal-revisit (\code{stage2wt}) design 
 #'   weights must be adjusted for any missing data or frame error prior to trend
@@ -105,45 +124,41 @@
 #'   \code{method="WLRDB"} require specification of \code{lat} and \code{long} 
 #'   on setting the neighborhood variance estimator \code{nbhd=TRUE}.  Set 
 #'   option \code{nbhd=FALSE} for non-spatially balanced designs so that the 
-#'   \code{"WLRDB"} method [and \code{"SLRDB"}?] assumes independent random 
-#'   sampling for standard errors.  These methods also require specification of 
-#'   \code{stratum}.
+#'   \code{"SLRDB"} and \code{"WLRDB"} methods assume independent random 
+#'   sampling for standard errors.  
 #'   
 #'   The stratification variable \code{stratum} is required for 
-#'   \code{method="PO"} and \code{method="PWIGLS"}.  Note that 
+#'   all methods when design strata are used.  Note that 
 #'   \code{method="PWIGLS"} further requires a value for \code{type}.  See 
 #'   section "Options for variable \code{type}" below.
 #'   
-#'   Variables \code{state1wt} and \code{stage2wt} must be specified when 
-#'   \code{method="PWIGLS"}.
+#'   Variables \code{stage1wt} and \code{stage2wt} must be specified for all  
+#'   methods except the unweighted \code{method="PO"}.
 #'   
 #' @section Data frame \code{dat}:
 #'   
 #'   Data frame \code{dat} requires at least variables \code{Site}, 
-#'   \code{WYear}, \code{Year}, and \code{Y}.  Variable \code{Site} serves as a 
-#'   statistical-unit text descriptior.
+#'   \code{WYear}, \code{Year}, and \code{Y}.  Variable \code{Site} defines the 
+#'   sampling unit.
 #'   
 #'   Underlying statistical functions called by \code{TrendNPS_Cont} require two
-#'   separate temporal variables: \code{WYear} is a scalar-year value, while
-#'   \code{Year} is a factor.
+#'   separate temporal variables: \code{Year} is a factor and \code{WYear} is a 
+#'   scalar-year value.  \code{WYear} is shifted so that the year for which \code{Y}
+#'   is least variable is centered on 0. See Piepho & Ogutu (2002) for more 
+#'   information.
 #'   
-#'   Ultimately, \code{WYear} enters the model as a trend effect, and designates
-#'   the survey occasions used in the fixed-effects portion of the trend model. 
-#'   The regression coefficient associated with \code{WYear} provides the basis 
-#'   for trend estimation and testing. In line with Piepho & Ogutu (2002), 
-#'   function \code{TrendNPS_Cont} reassigns the recorded temporal unit 
-#'   \code{WYear} in which the outcome \code{Y} is least variable as zero, with 
-#'   all other values \code{WYear} calculated with respect to this redefined 
-#'   zero point.
+#'   Ultimately, \code{WYear} represents time in the fixed-effects portion of the  
+#'   trend model. The regression coefficient associated with \code{WYear} provides
+#'   the basis for trend estimation and testing. 
 #'   
-#'   Variable \code{Year} enters the model as a random effect, and identifies 
-#'   unique values for each survey occasion.  As a random effect, it provides 
+#'   Variable \code{Year} enters the model as a random effect and provides 
 #'   the basis for estimation of random year-to-year variation among survey 
 #'   occasions.
 #'   
-#'   Variable \code{Y} must contain only positive non-zero values.  Analyses 
-#'   utilizing \code{method="PO"} or \code{method="PWIGLS"} assumes variable 
-#'   \code{Y} has been previously transformed to a logarithmic scale.
+#'   Variable \code{Y} must contain only positive non-zero values.  Trend analyses 
+#'   approached will implement a logarithmic transformation for trend modeling of 
+#'   variable \code{Y}, but the untransformed variable \code{Y} should be provided 
+#'   as an function call.
 #'   
 #' @section Options for variable \code{type}:
 #'   
@@ -190,8 +205,8 @@
 #'   Natural Resource Report NPS/PWRO/NRR-2016/1233. National Park Service, Fort
 #'   Collins, Colorado.
 #'   
-#'   L.A. Starcevich, T. McDonald, A. Chung-MacCoubrey, A. Heard, and J. Nesmith
-#'   (2017). Trend Estimation for Complex Survey Designs. Natural Resource 
+#'   L.A. Starcevich, T. McDonald, A. Chung-MacCoubrey, A. Heard, and J. Nesmith.
+#'   2017. Trend Estimation for Complex Survey Designs. Natural Resource 
 #'   Report NPS/xxxx/NRR-2017/xxxx. National Park Service, Fort Collins, 
 #'   Colorado.
 #'   
@@ -200,7 +215,7 @@
 #' @examples 
 #' 
 #' #  ---- Read example data set.
-#' data(SEKIANC)
+#' data(LakeDataRep)
 #' 
 #' #  ---- Load dependent packages. 
 #' pkgList <- c("lme4","lmerTest","spsurvey")
@@ -209,248 +224,288 @@
 #' lapply(pkgList, library, character.only = TRUE)
 #' 
 #' ###########################
-#' #  ---- A1. PO method: full random effects model.
-#' PO_ests <- TrendNPS_Cont(dat=SEKIANC, method="PO", type=NA, slope=TRUE, 
-#'                          stratum=NA, Y="Y", lat="Lat", long="Long",
-#'                          stage1wt="wgt", stage2wt="Panelwgt", str1prop=NA)
-#' # Error: number of observations (=80) <= number of random effects (=92) for 
-#' # term (1 + WYear | Site); the random-effects parameters and the residual 
-#' # variance (or scale parameter) are probably unidentifiable
+#' Example 1: Trend analysis with the PO approach: stratification and full random 
+#' effects model.
+#' PO_ests <- TrendNPS_Cont(alpha=0.1,dat=LakeDataRep, method="PO", slope=TRUE, 
+#'      stratum="Park", Y="Cl", str1prop=str1prop)
+
+#' PO_ests
+#' $ModelEstimates
+#'          mu       trend    SEtrend     sig2a       sig2t       sigat      sig2b
+#'    1.269532 -0.07196304 0.05624014 0.2846501 0.009663692 -0.05208829 0.04079863
+#'       sig2e      eta
+#'  0.08133577 24.94572
 #' 
-#' #  ---- Conclusion: the random effects are not estimable due to too few
-#' #  ---- observations.  Reduce the random effects model by removing the 
-#' #  ---- random slope term; i.e., set slope=FALSE.
+#' $TrendTest
+#'         trend    SEtrend    t-stat      eta    pvalue
+#'   -0.07196304 0.05624014 -1.279567 24.94572 0.2124709
 #' 
-#' #  ---- A2. PO method: reduced random effects model.
-#' PO_ests <- TrendNPS_Cont(dat=SEKIANC, method="PO", type=NA, slope=FALSE,
-#'                          stratum=NA, Y="Y", lat="Lat", long="Long",
-#'                          stage1wt="wgt", stage2wt="Panelwgt", str1prop=NA)
-#' round(PO_ests,4)
+#' $TrendCI
+#'   Annual Pct Change     CI low   CI high
+#'         -0.06943471 -0.1546776 0.0244041
+
 #' 
-#' #     mu  trend SEtrend  sig2a sig2t sigat sig2b  sig2e    eta
-#' #  3.964 0.0194  0.0322 0.3422     0     0     0 0.0161 3.6202
+#' ###########################
+#' Example 2: Trend analysis with the WLRDB approach: stratification and full random effects model.
+#' WLRDB_ests <- TrendNPS_Cont(alpha=0.1,dat=LakeDataRep, method="WLRDB",  
+#'          slope=TRUE, stratum="Park", Y="Cl", lat="ycoord",
+#'          long="xcoord",stage1wt="AdjWgt", stage2wt="PanelWt",
+#'          str1prop=str1prop)
+#' WLRDB_ests
+
+#' $ModelEstimates
+#'          mu      trend    SEtrend sig2a sig2t sigat sig2b    sig2e eta
+#'   0.4218735 0.06037018 0.07802896     0     0     0     0 3.402272   4
 #' 
-#' #  ---- Construct a 95%-confidence interval on the trend estimate of 
-#' #  ---- the logged outcome.
-#' CI <- c(PO_ests$trend - qt(1-(0.05/2), PO_ests$eta) * PO_ests$SEtrend, 
-#'         PO_ests$trend + qt(1-(0.05/2), PO_ests$eta) * PO_ests$SEtrend)
-#' round(c(PO_ests$trend, CI),4)
+#' $TrendTest
+#'        trend    SEtrend    t-stat eta    pvalue
+#'   0.06037018 0.07802896 0.7736894   4 0.4822974
 #' 
-#' # 0.0194 -0.0737  0.1125
+#' $TrendCI
+#'   Annual Pct Change     CI low   CI high
+#'          0.06222969 -0.1005534 0.2544735
 #' 
-#' #  ---- Construct a 95%-confidence interval on the trend estimate of 
-#' #  ---- the original outcome.  
-#' round(exp(c(PO_ests$trend, CI)),4)
-#' 
-#' # 1.0196 0.9290 1.1191
-#' 
-#' #  ---- Conduct a two-sided test of trend for an alternative hypothesis 
-#' #  ---- of trend in either direction.
-#' t_stat <- PO_ests$trend/ PO_ests$SEtrend
-#' p_value <- 2*(1-pt(abs(t_stat), PO_ests$eta, lower=TRUE))
-#' round(data.frame(t_stat,p_value) ,4)
-#' 
-#' # 0.6038 0.5817
+#' $DBests
+#'   Year Est.Mean         SE WYear        Resid
+#'   2008 4.505724 0.55610529     0  1.083475074
+#'   2009 2.162006 0.20158290     1  0.288793000
+#'   2010 1.712219 0.03578556     2 -0.004823561
+#'   2011 1.592197 0.07584161     3 -0.137869385
+#'   2012 2.611047 0.14932238     4  0.296397135
+#'   2013 2.348186 0.18412120     5  0.129918636
 #' 
 #' 
 #' ###########################
-#' #  ---- B1. WLRDB method.
-#' WLRDB_ests <- TrendNPS_Cont(dat=SEKIANC, method="WLRDB", type=NA, 
-#'                             slope=FALSE, stratum=NA, Y="Y", lat="Lat",
-#'                             long="Long",stage1wt="wgt", stage2wt="Panelwgt",
-#'                             str1prop=NA)
-#' round(WLRDB_ests,4)
+#' Example 3: Trend analysis with the PWIGLS method with type="Aonly".
+#' PWIGLS_Aonly_ests <- TrendNPS_Cont(alpha=0.1,dat=LakeDataRep, method="PWIGLS", 
+#'          type="Aonly", slope=TRUE, stratum="Park", Y="Cl", lat="ycoord",
+#'          long="xcoord", stage1wt="AdjWgt", stage2wt="PanelWt",
+#'          str1prop=str1prop)
+#' PWIGLS_Aonly_ests
 #' 
-#' #      mu  trend SEtrend  sig2a sig2t sigat sig2b  sig2e   eta
-#' #  4.1914 -0.0177  0.0492     0     0     0     0 0.0002   4
+#' $ModelEstimates
+#'        mu       trend    SEtrend    sig2a     sig2t     sigat     sig2b
+#'  1.441448 -0.08109772 0.09649006 10.66269 0.3102913 -1.818939 0.4271289
+#'       sig2e      eta
+#'  0.09145612 24.94572
 #' 
+#' $TrendTest
+#'        trend    SEtrend     t-stat      eta    pvalue
+#'  -0.08109772 0.09649006 -0.8404774 24.94572 0.4086247
 #' 
-#' ###########################
-#' #  ---- C1. PWIGLS with type="Aonly".
-#' PWIGLS_Aonly_ests <- TrendNPS_Cont(dat=SEKIANC, method="PWIGLS", type="Aonly",
-#'                                    slope=FALSE, stratum=NA, Y="Y", lat="Lat",
-#'                                    long="Long",stage1wt="wgt", 
-#'                                    stage2wt="Panelwgt", str1prop=NA)
-#' round(PWIGLS_Aonly_ests,4)
+#' $TrendCI
+#'   Annual Pct Change     CI low    CI high
+#'         -0.07789642 -0.2180231 0.08734037
 #' 
-#' #      mu  trend SEtrend  sig2a sig2t sigat  sig2b  sig2e    eta
-#' #  3.8812 0.0383   0.031 6.2650     0     0 0.0732 0.0167 3.6202
-#' 
-TrendNPS_Cont<-function(dat,method,slope=TRUE,type=NA,stratum=NA,Y,lat=NA,long=NA,stage1wt=NA,stage2wt=NA,str1prop=NA,nbhd=TRUE) {
+TrendNPS_Cont<-function(alpha,dat,method,slope=TRUE,type=NA,stratum=NA,Y,lat=NA,long=NA,stage1wt=NA,stage2wt=NA,str1prop=NA,nbhd=TRUE) {
 
-#   dat <- SEKIANC
-#   method <- "PO"
-#   slope <- FALSE
-#   type <- NA
-#   stratum <- NA
-#   Y <- "Y"
-#   lat <- "Lat"
-#   long <- "Long"
-#   stage1wt <- "wgt"
-#   stage2wt <- "Panelwgt"
-#   str1prop <- NA
-#   nbhd <- TRUE
-  
-  # Calculate sample sizes
-  Sites = sort(unique(dat$Site))
-  ma = length(Sites)
-  Years = as.character(sort(unique(dat$Year)))
-  WYears = sort(unique(dat$WYear))
-  mb = length(WYears)
+# dat = data set for trend analysis
+# dat must contain fields for Site, WYear (scalar year value), and Year (year factor)
+# other covariate fields in dat may be used in the trend model, but WYear must be used to estimate trend
 
-  # Assign stratum
-  if(!is.na(stratum)) dat$Stratum <- dat[,stratum]
+# Calculates a trend model specified by method:
+# 'PO' = Piepho and Ogutu (2002) unreplicated linear mixed model 
+# 'SLRDB' = Simple linear regression of design-based estimates
+# 'WLRDB' = Weighted linear regression of design-based estimates using the inverse of the variance of the estimate as the weight
+# 'PWIGLS' = probability-weighted iterative generalized least squares (Pfeffermann et al. 1998, Asparouhov 2002)
+#    PWIGLS requires the input, type =
+#    'Aonly' = probability weighting but no scaling at either stage
+#    'A' = scales panel weights with the mean site-level design weight
+#    'AI' = scales panel weights with the mean site-level design weight, but removes site-level scaling
+#    'B' = scales panel weights with the effective mean site-level design weight
+#    'BI' = scales panel weights with the effective mean site-level design weight, but removes site-level scaling
+#    'C' = scales only at the year level with the inverse of the average year-level weight 
 
-  ############################################################################################
-  # METHOD PO: Piepho & Ogutu (2002) linear mixed model 
-  # Unreplicated model - one observation per Year and Site
-  ############################################################################################
-  if(method %in% c("PO","PWIGLS")) {	
-  
-    # create a logged outcome of interest
-    dat$LogY = log(dat[,Y])
-	  if(is.na(stratum)) {
-	  	if(slope) fit<-lmer(LogY ~ WYear + (1|Year) +(1+WYear|Site), data=dat)
-	  	if(!slope) fit<-lmer(LogY ~ WYear + (1|Year) +(1|Site), data=dat)
-	  } 
-    
-	  if(!is.na(stratum)) {
-	  	if(slope) fit<-lmer(LogY ~ WYear + Stratum+ (1|Year) +(1+WYear|Site), data=dat)
-	  	if(!slope) fit<-lmer(LogY ~ WYear + Stratum+ (1|Year) +(1|Site), data=dat)
-	  }
+# Inputs needed for SLRDB and WLRDB methods
+# stratum = column name of stratification variable in dat
+#    stratum is used directly in the SLRDB and WLRDB approaches
+#    The stratification variable must be included in the fe input for methods PO and PWIGLS
+# Y = column name of the outcome of interest for design-based estimates
+# lat = column name of the latitude 
+# long = column name of the longitude
 
-    if(method=="PWIGLS") {
-    	fit_PO = fit
-    	rm(fit)
-    }
+# Inputs needed for PWIGLS method
+# stage1wt = weight from the sampling design, adjusted for frame and/or nonresponse error if needed
+# stage2wt = panel weight from temporal revisit design
 
-    if(method=="PO") {
-	    mu<- summary(fit)$coef[1,1]
-	    trend<- summary(fit)$coef[2,1]
-	    SEtrend<- summary(fit)$coef[2,2]
-	    if(slope) sig2a<- VarCorr(fit)$Site[1,1]		# var(ai)
-	    if(!slope) sig2a<- VarCorr(fit)$Site			# var(ai)
-	    if(slope) {
-	 	    sig2t<- VarCorr(fit)$Site[2,2]		# var(ti)
-	 	    sigat<- VarCorr(fit)$Site[1,2]		# cov(ai,ti)
-	    }
-	    if(!slope) sig2t<- sigat<- 0		
- 	    sig2e<- attr(VarCorr(fit),"sc")^2
-	    eta<- summary(fit)$coef[2,3]
-	   #q.t<-qt(1-(alfa/2),eta)
-	  }
-  }		# End PO   ... jason & PWIGLS i think
-  
-  ###############################################################################	
-  # Methods SLRDB and WLRDB: Simple linear regression on annual design-based estimates 
-  # SLRDB: unweighted 
-  # WLRDB: weighted by inverse of variance of each annual estimate
-  ###############################################################################
+# srt1prop = proportion of the population represented by stratum 1 in a two-level stratification variable 
+#   str1 will be the stratum listed first when stratum levels are ordered alphabetically.
 
-  if(method %in% c("SLRDB","WLRDB")) {
-    MeanEsts=data.frame(matrix(NA,mb,3))
-    MeanEsts[,1] <- Years
+# requires package lme4, lmerTest, spsurvey
 
-    # Calculate annual design-based status estimates of the mean
-	  for (g in 1:mb) {
-      dat.g<-dat[dat$WYear==WYears[g],]
-       
-      if(is.na(stratum)) {
-	      ests <-cont.analysis(
-		      sites=data.frame(siteID=dat.g$Site, rep(TRUE,nrow(dat.g))), 
-		      subpop= data.frame(siteID=dat.g$Site, Popn1=rep(1, nrow(dat.g))), 
-		      design= data.frame(siteID=dat.g$Site, 
-		        wgt= dat.g$wgt, xcoord = dat.g[,long], ycoord = dat.g[,lat]), 
-		      data.cont= data.frame(siteID=dat.g$Site, Y=dat.g[,Y]), conf=90, vartype=ifelse(nbhd,"Local","SRS"))
-	      MeanEsts[g,2:3] <-ests$Pct[ests$Pct$Statistic=="Mean",6:7]
-      }
-      
-      if(!is.na(stratum)) {
-	      ests <-cont.analysis(
-		      sites=data.frame(siteID=dat.g$Site, rep(TRUE,nrow(dat.g))), 
-		      subpop= data.frame(siteID=dat.g$Site, Popn1=rep(1, nrow(dat.g))), 
-		      design= data.frame(siteID=dat.g$Site, 
-		        wgt= dat.g$wgt, xcoord = dat.g[,long], ycoord = dat.g[,lat], stratum=dat.g[,stratum]), 
-		      data.cont= data.frame(siteID=dat.g$Site, Y=dat.g[,Y]), conf=90, vartype=ifelse(nbhd,"Local","SRS"))
-	      MeanEsts[g,2:3] <-ests$Pct[ests$Pct$Statistic=="Mean",6:7]
-		  }
-	  }
-    
-	  MeanEsts[,3] <- as.numeric(MeanEsts[,3])
-	  names(MeanEsts) <- c("Year","Est.Mean","SE")
-	  MeanEsts$WYear = WYears
-	  
-    # calculate trend in logged mean over time
-	  if(method=="SLRDB")  fit<-lm(log(Est.Mean) ~ WYear, data=MeanEsts)
-	  if(method=="WLRDB")  fit<-lm(log(Est.Mean) ~ WYear, weights=1/(SE^2), data=MeanEsts)
+# Calculate sample sizes
+Sites = sort(unique(dat$Site))
+ma = length(Sites)
+Years = as.character(sort(unique(dat$Year)))
+WYears = sort(unique(dat$WYear))
+mb = length(WYears)
+
+# Assign stratum
+if(!is.na(stratum)) dat$Stratum <- dat[,stratum]
+
+############################################################################################
+# METHOD PO: Piepho & Ogutu (2002) linear mixed model 
+# Unreplicated model - one observation per Year and Site
+############################################################################################
+if(method %in% c("PO","PWIGLS")) {	
+# create a logged outcome of interest
+dat$LogY = log(dat[,Y])
+	if(is.na(stratum)) {
+		if(slope) fit<-lmer(LogY ~ WYear + (1|Year) +(1+WYear|Site), data=dat)
+		if(!slope) fit<-lmer(LogY ~ WYear + (1|Year) +(1|Site), data=dat)
+	}
+	if(!is.na(stratum)) {
+		if(slope) fit<-lmer(LogY ~ WYear * Stratum+ (1|Year) +(1+WYear|Site), data=dat)
+		if(!slope) fit<-lmer(LogY ~ WYear * Stratum+ (1|Year) +(1|Site), data=dat)
+	}
+
+if(method=="PWIGLS") {
+	fit_PO = fit
+	rm(fit)
+	}
+
+if(method=="PO") {
+	if(!slope) {
+		sig2a<- VarCorr(fit)$Site		# var(ai)
+		sig2t<- sigat<- 0
+	}
+	if(slope) {
+		sig2a<- VarCorr(fit)$Site[1,1]		# var(ai)
+		sig2t<- VarCorr(fit)$Site[2,2]		# var(ti)
+		sigat<- VarCorr(fit)$Site[1,2]		# cov(ai,ti)
+	}
+	sig2b<- VarCorr(fit)$Year
+	sig2e<- attr(VarCorr(fit),"sc")^2
+	if(is.na(stratum))  {		# No stratification
+		mu<- summary(fit)$coef[1,1]
+		trend<- summary(fit)$coef[2,1]
+		SEtrend<- summary(fit)$coef[2,2]
+		eta<- summary(fit)$coef[2,3]
+	}
+	if(!is.na(stratum))  {		# Stratification with two levels
+		mu<- summary(fit)$coef[1,1]
+		c.vec = matrix(c(0,1,0,1-str1prop),1,4)
+		trend = c.vec %*% fixef(fit)
+		SEtrend<- sqrt(c.vec%*% as.matrix(vcov(fit))%*%t(c.vec))
+		eta<- sum(summary(fit)$coef[c(2,4),3])	# Use PO df - sum of df for two trend coefs
+	}
+
+}		# End PO
+} 		# End PO or PWIGLS
+###############################################################################	
+# Methods SLRDB and WLRDB: Simple linear regression on annual design-based estimates 
+# SLRDB: unweighted 
+# WLRDB: weighted by inverse of variance of each annual estimate
+###############################################################################
+
+if(method %in% c("SLRDB","WLRDB")) {
+	MeanEsts=data.frame(matrix(NA,mb,3))
+	MeanEsts[,1] <- Years
+
+# Calculate annual design-based status estimates of the mean
+	for (g in 1:mb) {
+		dat.g<-dat[dat$WYear==WYears[g],]
+		if(is.na(stratum)) {
+			ests <-cont.analysis(
+		sites=data.frame(siteID=dat.g$Site, rep(TRUE,nrow(dat.g))), 
+		subpop= data.frame(siteID=dat.g$Site, Popn1=rep(1, nrow(dat.g))), 
+		design= data.frame(siteID=dat.g$Site, 
+		wgt= dat.g$wgt, xcoord = dat.g[,long], ycoord = dat.g[,lat]), 
+		data.cont= data.frame(siteID=dat.g$Site, Y=dat.g[,Y]), conf=90, vartype=ifelse(nbhd,"Local","SRS"))
+			MeanEsts[g,2:3] <-ests$Pct[ests$Pct$Statistic=="Mean",6:7]
+		}
+		if(!is.na(stratum)) {
+			ests <-cont.analysis(
+		sites=data.frame(siteID=dat.g$Site, rep(TRUE,nrow(dat.g))), 
+		subpop= data.frame(siteID=dat.g$Site, Popn1=rep(1, nrow(dat.g))), 
+		design= data.frame(siteID=dat.g$Site, 
+		wgt= dat.g$wgt, xcoord = dat.g[,long], ycoord = dat.g[,lat], stratum=dat.g[,stratum]), 
+		data.cont= data.frame(siteID=dat.g$Site, Y=dat.g[,Y]), conf=90, vartype=ifelse(nbhd,"Local","SRS"))
+			MeanEsts[g,2:3] <-ests$Pct[ests$Pct$Statistic=="Mean",6:7]
+		}
+	}
+	MeanEsts[,3] <- as.numeric(MeanEsts[,3])
+	names(MeanEsts) <- c("Year","Est.Mean","SE")
+	MeanEsts$WYear = WYears
+# calculate trend in logged mean over time
+	if(method=="SLRDB")  fit<-lm(log(Est.Mean) ~ WYear, data=MeanEsts)
+	if(method=="WLRDB")  fit<-lm(log(Est.Mean) ~ WYear, weights=1/(SE^2), data=MeanEsts)
 
   	mu <- coef(fit)[1]				# mu
-	  trend<- coef(fit)[2]				# slope
-	  SEtrend<-sqrt(vcov(fit)[2,2])			# SE
-	  sig2a<- sig2t<- sigat<- sig2b<- 0
-	  sig2e<- (summary(fit)$sigma)^2
-	  eta<-summary(fit)$df[2]
-	 #q.t <- qt(1-(alfa/2),eta)
-  }  # End SLRDB/WLRDB
+	trend<- coef(fit)[2]				# slope
+	SEtrend<-sqrt(vcov(fit)[2,2])			# SE
+	sig2a<- sig2t<- sigat<- sig2b<- 0
+	sig2e<- (summary(fit)$sigma)^2
+	eta<-summary(fit)$df[2]
+}  # End SLRDB/WLRDB
 
-  ############################################################################################
-  # PWIGLS methods
-  ############################################################################################
+############################################################################################
+# PWIGLS methods
+############################################################################################
 
-  if(method=="PWIGLS") {
-    if(!type %in% c("Aonly","A","AI","B","BI","C")) return("PWIGLS scaling type not recognized.")
+if(method=="PWIGLS") {
+if(!type %in% c("Aonly","A","AI","B","BI","C")) return("PWIGLS scaling type not recognized.")
 
-	  fit<-PWIGLS_ALL(Z=getME(fit_PO,"Z"),dat=dat,stage1wt=stage1wt,stage2wt=stage2wt,type=type,stratum=stratum,slope=slope)
-  #	fit<-fit[[1]]
-	  mu<- fixef(fit)[1]				# intercept
-    if(slope) {
-	    sig2a<- VarCorr(fit)$Site[1,1]		# var(ai)
-	    sig2t<- VarCorr(fit)$Site[2,2]		# var(ti)
-	    sigat<- VarCorr(fit)$Site[1,2]		# cov(ai,ti)
-    	sig2b<- VarCorr(fit)$Year[1]			# var(bj)
-	    sig2e<- attr(VarCorr(fit),"sc")^2		# var(eij)
-	  } 
-    if(!slope) {
-	    sig2a<- VarCorr(fit)$Site[1]			# var(ai)
-	    sig2t<- sigat<- 0
-	    sig2b<- VarCorr(fit)$Year[1]			# var(bj)
-	    sig2e<- attr(VarCorr(fit),"sc")^2		# var(eij)
-	  }
-	  varij = sig2a + sig2b + dat$WYear*sigat +(dat$WYear^2)*sig2t +sig2e
+	fit<-PWIGLS_ALL(Z=getME(fit_PO,"Z"),dat=dat,stage1wt=stage1wt,stage2wt=stage2wt,type=type,stratum=stratum,slope=slope)
+#	fit<-fit[[1]]
+	mu<- fixef(fit)[1]				# intercept
+if(slope) {
+	sig2a<- VarCorr(fit)$Site[1,1]		# var(ai)
+	sig2t<- VarCorr(fit)$Site[2,2]		# var(ti)
+	sigat<- VarCorr(fit)$Site[1,2]		# cov(ai,ti)
+	sig2b<- VarCorr(fit)$Year[1]			# var(bj)
+	sig2e<- attr(VarCorr(fit),"sc")^2		# var(eij)
+	} 
+if(!slope) {
+	sig2a<- VarCorr(fit)$Site[1]			# var(ai)
+	sig2t<- sigat<- 0
+	sig2b<- VarCorr(fit)$Year[1]			# var(bj)
+	sig2e<- attr(VarCorr(fit),"sc")^2		# var(eij)
+	}
+	varij = sig2a + sig2b + dat$WYear*sigat +(dat$WYear^2)*sig2t +sig2e
 
-    if(is.na(stratum)) {		# No strata
-	    trend<- fixef(fit)[2]				# slope
-	    eta<- summary(fit_PO)$coef[2,3]		# Use PO df
-    # Linearization variance -- Pfeffermann 1988
-    	SEtrend<-sqrt(LinearizationVar(Site=dat$Site,
-		    wij=dat[,stage1wt]*dat[,stage2wt],
-		    xij=dat$WYear,
-		    eij=dat$LogY-mu-(trend*dat$WYear),
-		    varYij=varij)) 
-	  }	# END No strata
 
-    if(!is.na(stratum))  {		# Stratification with two levels
-	    trend1<- fixef(fit)[2]				# slope of stratum 1
-	    trend2<- fixef(fit)[4]				# slope of stratum 2 - slope of stratum 1
-	    trend=trend1 + (1-str1prop)*trend2		# population estimate of trend
-	    eta<- sum(summary(fit_PO)$coef[c(2,4),3])	# Use PO df - sum of df for two trend coefs
-	    Ind1 = as.numeric(dat$Stratum==levels(dat$Stratum)[1])
-	    SEtrend<-sqrt(LinearizationVar_StRS(Site=dat$Site,
-		    wij=dat$wgt*dat$Stage2wt,
-		    xij=data.frame(dat$WYear,Ind1),
-		    eij=dat$LogY-mu-(trend1*dat$WYear)-(fixef(fit)[3]*Ind1)-(trend2*dat$WYear*Ind1),
-		    varYij=varij,
-		    str1prop=str1prop))
-	  }   # END Stratification with two levels
-  }			# End PWIGLS
+if(is.na(stratum)) {		# No strata
+	trend<- fixef(fit)[2]				# slope
+	eta<- summary(fit_PO)$coef[2,3]		# Use PO df
+# Linearization variance -- Pfeffermann 1988
+	SEtrend<-sqrt(LinearizationVar(Site=dat$Site,
+		wij=dat[,stage1wt]*dat[,stage2wt],
+		xij=dat$WYear,
+		eij=dat$LogY-mu-(trend*dat$WYear),
+		varYij=varij)) 
+	}	# END No strata
 
-  if(slope==TRUE){
-    ans=data.frame(mu,trend,SEtrend,sig2a,sig2t,sigat,sig2b,sig2e,eta)	# ,q.t
-    names(ans)=c('mu','trend','SEtrend','sig2a','sig2t','sigat','sig2b','sig2e','eta')
-  } else {
-    ans=data.frame(mu,trend,SEtrend,sig2a,sig2t,sigat,sig2e,eta)	
-    names(ans)=c('mu','trend','SEtrend','sig2a','sig2t','sigat','sig2e','eta')
-  }
-  rownames(ans) = NULL
-  return(ans)
+
+if(!is.na(stratum))  {		# Stratification with two levels
+	trend1<- fixef(fit)[2]				# slope of stratum 1
+	trend2<- fixef(fit)[4]				# slope of stratum 2 - slope of stratum 1
+	trend=trend1 + (1-str1prop)*trend2		# population estimate of trend
+	eta<- sum(summary(fit_PO)$coef[c(2,4),3])	# Use PO df - sum of df for two trend coefs
+	Ind1 = as.numeric(dat$Stratum==levels(dat$Stratum)[1])
+	SEtrend<-sqrt(LinearizationVar_StRS(Site=dat$Site,
+		wij=dat[,stage1wt]*dat[,stage2wt],
+		xij=data.frame(dat$WYear,Ind1),
+		eij=dat$LogY-mu-(trend1*dat$WYear)-(fixef(fit)[3]*Ind1)-(trend2*dat$WYear*Ind1),
+		varYij=varij,
+		str1prop=str1prop))
+	}   # END Stratification with two levels
+}			# End PWIGLS
+
+ans.model = data.frame(mu,trend,SEtrend,sig2a,sig2t,sigat,sig2b,sig2e,eta)	# ,q.t
+names(ans.model)=c('mu','trend','SEtrend','sig2a','sig2t','sigat','sig2b','sig2e','eta')
+rownames(ans.model) = NULL
+
+# wald test
+ans.trendtest = data.frame(trend = ans.model[2], SE = ans.model[3], t.stat=ans.model[2]/ans.model[3], df=ans.model[9], pvalue=2*pt(as.numeric(abs(ans.model[2]/ans.model[3])),as.numeric(ans.model[9]),lower.tail =FALSE))
+names(ans.trendtest)[3] = 't-stat'
+
+# CI on trend:
+CI = data.frame(ans.model[2],ans.model[2]-qt(1-(alpha/2),as.numeric(ans.model[9]))*ans.model[3],ans.model[2]+qt(1-(alpha/2),as.numeric(ans.model[9]))*ans.model[3])
+ans.trendCI = exp(CI)-1
+names(ans.trendCI) = c("Annual Pct Change", "CI low", "CI high")
+
+if(!method %in% c("SLRDB","WLRDB")) return(list(ModelEstimates = ans.model, TrendTest = ans.trendtest, TrendCI = ans.trendCI))
+if(method %in% c("SLRDB","WLRDB")) return(list(ModelEstimates = ans.model, TrendTest = ans.trendtest, TrendCI = ans.trendCI, DBests = data.frame(MeanEsts, Resid = resid(fit))))
+
 }

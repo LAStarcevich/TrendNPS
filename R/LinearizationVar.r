@@ -1,34 +1,45 @@
 #' @export
 #' 
-#' @title Calculate linearization variance of trend (Skinner, et al. 1989)
+#' @title Calculate linearization variance of trend for the PWIGLS trend approach.
 #'   
-#' @description Calculate the linearization variance of the trend coefficient
+#' @description Calculate the linearization variance of the trend coefficient with a Taylor
+#' series approximation. This is an internal function called from PWIGLS_ALL. 
 #'   
-#' @param Site  vector of PSUs.
-#' @param wij  inclusion weight = PSU wt * SSU wt.
-#' @param xij  year var for trend estimation.
-#' @param eij  residual.
-#' @param varYij  total variance for yij, estimated from PWIGLS estimates of
-#'   variance from P&O.
+#' @param Site  vector of Site names.
+#' @param wij  vector of inclusion weights = Site-level design weight * Year-level panel weight.
+#' @param xij  vector of shifted year variables (WYear) for trend estimation.
+#' @param eij  vector of residuals from PWIGLS trend model.
+#' @param varYij  vector of total variance estimates for yij, estimated from PWIGLS variance 
+#' components estimates.
 #'   
-#' @return Something cool.
+#' @return Scalar variance estimate of the trend regression coefficient.
 #'   
-#' @details Something cool.
+#' @details The linearization variance is based on a Taylor series approximation. See 
+#' Skinner (1989, p. 82-83) for more information.
 #'   
 #' @author Leigh Ann Starcevich of Western EcoSystems Technology, Inc.
 #'   
-#' @references Skinner 1989., p. 82-83.
+#' @references Skinner, C.J., D. Holt, and T.M.F. Smith. 1989. Analysis of Complex Surveys. 
+#' New York: Wiley. 
 #'   
-#' @seealso \code{TrendNPS_Cont}, \code{LinearizationVar}
+#' @seealso \code{TrendNPS_Cont}, \code{LinearizationVar_StRS}
 #'   
 #' @examples 
 #' \dontrun{
 #' #  ---- Read example data set.
-#' SEKIANC_orig = LinearizationVar(Site,wij,xij,eij,varYij)
+#' TrendVar = LinearizationVar(Site,wij,xij,eij,varYij)
 #' }
 #' 
 #' 
 LinearizationVar <- function (Site,wij,xij,eij,varYij) {
+# Calculate the linearization variance (Skinner et al. 1989 p. 82-83)
+# of the trend coefficient
+# Inputs:
+# Site = vector of PSU's
+# wij = inclusion weight = PSU wt * SSU wt
+# xij = year var for trend estimation
+# eij = residual
+# varYij = total variance for yij, estimated from PWIGLS estimates of variance from P&O
 
 dTdB0 = matrix(c(sum(wij/varYij),
 sum(xij*wij/varYij),
@@ -72,21 +83,8 @@ g4 = (((-wij*xij/(2*varYij))) + (wij*xij*(eij^2))/(2*(varYij^2))),
 g5 = (((-wij/(2*varYij))) + (wij*(eij^2))/(2*(varYij^2)))), 
 list(Site=Site), sum)
 
-#print('nrow(g)')
-#print(nrow(g))
-
 VarL.T = nrow(g)* var(g[,2:6])
-
-#print('I.mat.inv')
-#print(I.mat.inv)
-
 VarL.Beta = I.mat.inv%*%VarL.T%*%I.mat.inv
-
-#print('VarL.Beta')
-#print(VarL.Beta)
-
-#print('sqrt(VarL.Beta[2,2])')
-#print(sqrt(VarL.Beta[2,2]))
 
 return(VarL.Beta[2,2])
 }

@@ -1,10 +1,12 @@
 #' @export
 #' 
-#' @title Calculate cool stuff.
+#' @title Probability-weighted iterative generalized least squares (PWIGLS).
 #'   
-#' @description Calculate cool stuff.  
+#' @description Calculate trend from data collected with complex survey designs by 
+#' incorporating weights with a linear mixed model. This is an internal function 
+#' called from TrendNPS_Cont.  
 #'   
-#' @param Z  Something.
+#' @param Z  Random-effects design matrix from the unweighted (PO) model.
 #' 
 #' @param dat	 Data frame containing columns at least for \code{Site}, 
 #'   \code{WYear}, \code{Year}, and the continuous outcome of interest \code{Y}.
@@ -15,9 +17,8 @@
 #'   \code{"C"}. See section "Options for variable \code{type}" below.
 #'   
 #' @param slope	 Logical value indicating inclusion of a random site-level slope
-#'   effect in the variance components structure used for the \code{"PO"} and 
-#'   \code{"PWIGLS"} trend methods.  Site- and year-level random intercept terms
-#'   included as default.
+#'  effect in the variance components structure in addition to the Site- and Year-
+#'  level random intercept terms. Default = TRUE.
 #'   
 #' @param stratum	 Text string identifying an optional two-level stratification 
 #'   factor in \code{dat}.
@@ -27,9 +28,10 @@
 #'   
 #' @param stage2wt	Panel inclusion weights for each site each year.
 #'   
-#' @return Something cool.
+#' @return Returns a vector of regression coefficient estimates for the trend model. 
 #'   
-#' @details Something cool.
+#' @details Calculates the probability-weighted iterative generalized least squares
+#' (PWIGLS) trend model (Pfeffermann et al. 1998; Asparouhov 2006).
 #' 
 #' @section Options for variable \code{type}:
 #'   
@@ -62,12 +64,14 @@
 #' @examples 
 #' \dontrun{
 #' #  ---- Read example data set.
-#' SEKIANC_orig = LinearizationVar(Site,wij,xij,eij,varYij)
+#' 	fit<-PWIGLS_ALL(Z=getME(fit_PO,"Z"),dat=dat,stage1wt=stage1wt,stage2wt=stage2wt,type=type,
+#'       stratum=stratum,slope=slope)
 #' }
 #' 
 #' 
-PWIGLS_ALL<-function(Z,dat,slope,type,stratum,stage1wt,stage2wt) {
+PWIGLS_ALL<-function(Z,dat,stage1wt,stage2wt,type,stratum,slope) {
 
+# Use PWIGLS from Pfeffermann et al 1998 and Asparouhov 2006
 
 SitesTables<-table(dat$Site)
 Sites<-unique(as.character(dat$Site))
@@ -88,8 +92,8 @@ d<-ncol(Z)
 # Adjust RE design matrix with sqrt of site design weights
 for (j in 1:sitecolindex) {
 	Site.j<-Sites[j]
-	#rows.j<-which(Z[,colnames(Z) %in% Site.j][,1]==1)
-	rows.j<-which(Z[,colnames(Z) %in% Site.j]==1)
+	if(slope) rows.j<-which(Z[,colnames(Z) %in% Site.j][,1]==1)
+	if(!slope) rows.j<-which(Z[,colnames(Z) %in% Site.j]==1)
 
 if(type=="Aonly") {
 # Pfeffermann Step A only from Pfeffermann et al. 1998, no scaling 
@@ -134,11 +138,13 @@ if(type=="C") {
 
 # PSU weight adj
 Z[rows.j,]<- Z[rows.j,]/sqrt(dat[rows.j,stage1wt]*s2j)	# multiply sqrt design weight by all cols
+
 # SSU weight adj
 if(ma>mb) Z[rows.j,(sitecol+1):d]<-Z[rows.j,(sitecol+1):d]/(sqrt(dat[rows.j,stage2wt]*s1j))  # multiply panel wgt for year effects
 if(ma<=mb) Z[rows.j,1:mb]<-Z[rows.j,1:mb]/(sqrt(dat[rows.j,stage2wt]*s1j))  # multiply panel wgt for year effects
 
 if(slope) {
+
 	if(ma>mb) {
 		A<-Z[,seq(1,sitecol-1,2)]
 		T<-Z[,seq(2,sitecol,2)]
@@ -150,6 +156,7 @@ if(slope) {
 		T<-Z[,mb+seq(2,sitecol,2)]
 		B<-Z[,1:mb]
 	}
+
 # Sum across rows to pick up each weight 
 	dat$SiteWt<-rowSums(A)			
 	dat$SlopeWt<-rowSums(T)
@@ -158,22 +165,20 @@ if(slope) {
 	if(is.na(stratum)) fit.PWIGLS<-lmer(LogY ~ WYear +(-1+YearWt|Year) +(-1+SiteWt+SlopeWt|Site), data=dat, REML=FALSE)  
 	if(!is.na(stratum)) fit.PWIGLS<-lmer(LogY ~ WYear*Stratum +(-1+YearWt|Year) +(-1+SiteWt+SlopeWt|Site), data=dat, REML=FALSE)  
 
-	#VarCor<-VarCorr(fit.PWIGLS)
-	#varcor<- c(VarCor$Year[1], VarCor$Site[1,1], VarCor$Site[2,2], attr(VarCor,"sc")^2, VarCor$Site[2,1])
 }	# End Random Slope model
 
 if(!slope) {
+
 	if(ma>mb) {
 		A<-Z[,1:sitecol]
-		#T<-Z[,seq(2,sitecol,2)]
 		B<-Z[,(sitecol+1):d]
 	}
 
 	if(ma<=mb) {
 		A<-Z[,(mb+1):d]
-		#T<-Z[,mb+seq(2,sitecol,2)]
 		B<-Z[,1:mb]
 	}
+
 # Sum across rows to pick up each weight 
 	dat$SiteWt<-rowSums(A)			
 	#dat$SlopeWt<-rowSums(T)
@@ -181,15 +186,10 @@ if(!slope) {
 	if(is.na(stratum)) fit.PWIGLS<-lmer(LogY ~ WYear +(-1+YearWt|Year) +(-1+SiteWt|Site), data=dat, REML=FALSE)  
 	if(!is.na(stratum)) fit.PWIGLS<-lmer(LogY ~ WYear*Stratum +(-1+YearWt|Year) +(-1+SiteWt|Site), data=dat, REML=FALSE)  
 
-	#VarCor<-VarCorr(fit.PWIGLS)
-	#varcor<- c(VarCor$Year[1], VarCor$Site, 0, attr(VarCor,"sc")^2, 0)
-
 }	# End No Random Slope model
 
 }  # end site loop
 
 return(fit.PWIGLS)
 } 
-
-
 

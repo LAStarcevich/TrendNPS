@@ -2,21 +2,21 @@
 % Please edit documentation in R/PWIGLS_ALL.r
 \name{PWIGLS_ALL}
 \alias{PWIGLS_ALL}
-\title{Calculate cool stuff.}
+\title{Probability-weighted iterative generalized least squares (PWIGLS).}
 \usage{
-PWIGLS_ALL(Z, dat, slope, type, stratum, stage1wt, stage2wt)
+PWIGLS_ALL(Z, dat, stage1wt, stage2wt, type, stratum, slope)
 }
 \arguments{
-\item{Z}{Something.}
+\item{Z}{Random-effects design matrix from the unweighted (PO) model.}
 
 \item{dat}{Data frame containing columns at least for \code{Site}, 
 \code{WYear}, \code{Year}, and the continuous outcome of interest \code{Y}.
 See section "Data frame \code{dat}" below.}
 
-\item{slope}{Logical value indicating inclusion of a random site-level slope
-effect in the variance components structure used for the \code{"PO"} and 
-\code{"PWIGLS"} trend methods.  Site- and year-level random intercept terms
-included as default.}
+\item{stage1wt}{Design weights from the original sample draw without 
+accounting for temporal revisit designs.}
+
+\item{stage2wt}{Panel inclusion weights for each site each year.}
 
 \item{type}{Scaling type when \code{method="PWIGLS"}. Valid values include 
 \code{"Aonly"}, \code{"A"}, \code{"AI"}, \code{"B"}, \code{"BI"} 
@@ -25,19 +25,21 @@ included as default.}
 \item{stratum}{Text string identifying an optional two-level stratification 
 factor in \code{dat}.}
 
-\item{stage1wt}{Design weights from the original sample draw without 
-accounting for temporal revisit designs.}
-
-\item{stage2wt}{Panel inclusion weights for each site each year.}
+\item{slope}{Logical value indicating inclusion of a random site-level slope
+effect in the variance components structure in addition to the Site- and Year-
+level random intercept terms. Default = TRUE.}
 }
 \value{
-Something cool.
+Returns a vector of regression coefficient estimates for the trend model.
 }
 \description{
-Calculate cool stuff.
+Calculate trend from data collected with complex survey designs by 
+incorporating weights with a linear mixed model. This is an internal function 
+called from TrendNPS_Cont.
 }
 \details{
-Something cool.
+Calculates the probability-weighted iterative generalized least squares
+(PWIGLS) trend model (Pfeffermann et al. 1998; Asparouhov 2006).
 }
 \section{Options for variable \code{type}}{
 
@@ -59,7 +61,8 @@ Something cool.
 \examples{
 \dontrun{
 #  ---- Read example data set.
-SEKIANC_orig = LinearizationVar(Site,wij,xij,eij,varYij)
+	fit<-PWIGLS_ALL(Z=getME(fit_PO,"Z"),dat=dat,stage1wt=stage1wt,stage2wt=stage2wt,type=type,
+      stratum=stratum,slope=slope)
 }
 
 

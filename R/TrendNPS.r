@@ -25,7 +25,7 @@ NULL
 #' @format A data frame with 77 rows and 17 variables.
 #' @keywords datasets
 #' @references Heard, A.M., L.A. H. Starcevich, J.O. Sickman, M. Goldin Rose, and D.W. Schweizer. 2012. 
-#' Sierra Nevada Network lake monitoring protocol. Natural Resource Report NPS/SIEN/NRR—2012/551. 
+#' Sierra Nevada Network lake monitoring protocol. Natural Resource Report NPS/SIEN/NRR-2012/551. 
 #' National Park Service, Fort Collins, Colorado.
 #' 
 #' A dataset containing the Sierra Nevada Network lake chemistry data from Sequoia-Kings Canyon and Yosemite National Parks. 
@@ -60,7 +60,7 @@ NULL
 #' @format A data frame with 130 rows and 6 variables.
 #' @keywords datasets
 #' @references Heard, A.M., L.A. H. Starcevich, J.O. Sickman, M. Goldin Rose, and D.W. Schweizer. 2012. 
-#' Sierra Nevada Network lake monitoring protocol. Natural Resource Report NPS/SIEN/NRR—2012/551. 
+#' Sierra Nevada Network lake monitoring protocol. Natural Resource Report NPS/SIEN/NRR-2012/551. 
 #' National Park Service, Fort Collins, Colorado.
 #' 
 #' A dataset containing the Sierra Nevada Network lake chemistry data from Sequoia-Kings Canyon and Yosemite National Parks. 
@@ -84,7 +84,7 @@ NULL
 #' @format A data frame with 461 rows and 10 variables.
 #' @keywords datasets
 #' @references Heard, A.M., L.A. H. Starcevich, J.O. Sickman, M. Goldin Rose, and D.W. Schweizer. 2012. 
-#' Sierra Nevada Network lake monitoring protocol. Natural Resource Report NPS/SIEN/NRR—2012/551. 
+#' Sierra Nevada Network lake monitoring protocol. Natural Resource Report NPS/SIEN/NRR-2012/551. 
 #' National Park Service, Fort Collins, Colorado.
 #'
 #' Kincaid, T. M. and Olsen, A. R. 2015. spsurvey: Spatial Survey Design and Analysis. R package version 3.1. 

@@ -4,11 +4,13 @@
 \alias{TrendNPS_Cont}
 \title{Trend for Continuous Outcomes from Complex Survey Designs}
 \usage{
-TrendNPS_Cont(dat, method, slope = TRUE, type = NA, stratum = NA, Y,
-  lat = NA, long = NA, stage1wt = NA, stage2wt = NA, str1prop = NA,
+TrendNPS_Cont(alpha, dat, method, slope = TRUE, type = NA, stratum = NA,
+  Y, lat = NA, long = NA, stage1wt = NA, stage2wt = NA, str1prop = NA,
   nbhd = TRUE)
 }
 \arguments{
+\item{alpha}{The probability of a Type I error.}
+
 \item{dat}{Data frame containing columns at least for \code{Site}, 
 \code{WYear}, \code{Year}, and the continuous outcome of interest \code{Y}.
 See section "Data frame \code{dat}" below.}
@@ -54,11 +56,12 @@ the design-based mean estimate's standard error assuming independent random
 sampling.}
 }
 \value{
-A displayed vector containing the trend estimate, along with its standard
-  error, estimated variance components, and degrees of freedom used to test
-  for trend and calculate confidence intervals.
+A list containing three or four elements, depending on the specified trend method. 
+  The first element of the list contains a data frame containing the estimated intercept,  
+  trend estimate, trend standard error, estimated variance components, and degrees of freedom  
+  used for trend testing and confidence intervals construction.
   
-  Additionally, a data frame containing each of 
+  The contents of the first list element, ModelEstimates, are:
   
   \tabular{rl}{
   
@@ -70,6 +73,26 @@ A displayed vector containing the trend estimate, along with its standard
   \code{sig2t}   \tab	Estimated variation among site-level slopes. \cr
   \code{sig2e}   \tab	Estimated residual variation. \cr
   \code{eta}     \tab	Degrees of freedom used to test for trend and calculate confidence intervals. \cr
+  
+  }
+  
+  The contents of the second list element, TrendTest, include the trend coefficient on the logged scale, 
+  the trend standard error, the t-statistic, degrees of freedom, and p-value for a two-sided test of no trend.
+  
+  The contents of the third list element, TrendCI, include the back-transformed trend on the original scale 
+  calulated as an annual percent change and the lower and upper (1-alpha)*100%-confidence interval bounds. 
+  
+  A fourth list element, DBests, contains the annual design-based estimates and is returned only when the 
+  SLRDB and WLRDB trend approaches are used.  The design-based estimates may be used to assess the assumption
+  of independence for the linear regression models.  The output of the DBests list element include:
+  
+  \tabular{rl}{
+  
+  \code{Year}      \tab	Year of survey. \cr
+  \code{Est.Mean}   \tab	Design-based estimate of the mean of the outcome of interest. \cr
+  \code{SE} \tab	   Estimated standard error of the design-based mean estimate using the neighborhood variace estimator if nbhd = TRUE. \cr
+  \code{WYear}   \tab	WYear variable. \cr
+  \code{Resid}     \tab	Residuals from the linear model fit. \cr
   
   }
 }
@@ -93,10 +116,8 @@ A displayed vector containing the trend estimate, along with its standard
   included.
 }
 \details{
-For long-term monitoring, \code{TrendNPS_Cont} assumes sampling 
-  occasions occur no more than once per unique record of \code{WYear} and 
-  \code{Site} in data frame \code{dat}.  [Tell people what to do to get 
-  around this?]
+For long-term monitoring, \code{TrendNPS_Cont} assumes single annual sampling 
+  occasions per unique record of \code{WYear} and \code{Site} in data frame \code{dat}.  
   
   Sampling (\code{stage1wt}) and temporal-revisit (\code{stage2wt}) design 
   weights must be adjusted for any missing data or frame error prior to trend
@@ -115,47 +136,43 @@ For long-term monitoring, \code{TrendNPS_Cont} assumes sampling
   \code{method="WLRDB"} require specification of \code{lat} and \code{long} 
   on setting the neighborhood variance estimator \code{nbhd=TRUE}.  Set 
   option \code{nbhd=FALSE} for non-spatially balanced designs so that the 
-  \code{"WLRDB"} method [and \code{"SLRDB"}?] assumes independent random 
-  sampling for standard errors.  These methods also require specification of 
-  \code{stratum}.
+  \code{"SLRDB"} and \code{"WLRDB"} methods assume independent random 
+  sampling for standard errors.  
   
   The stratification variable \code{stratum} is required for 
-  \code{method="PO"} and \code{method="PWIGLS"}.  Note that 
+  all methods when design strata are used.  Note that 
   \code{method="PWIGLS"} further requires a value for \code{type}.  See 
   section "Options for variable \code{type}" below.
   
-  Variables \code{state1wt} and \code{stage2wt} must be specified when 
-  \code{method="PWIGLS"}.
+  Variables \code{stage1wt} and \code{stage2wt} must be specified for all  
+  methods except the unweighted \code{method="PO"}.
 }
 
 \section{Data frame \code{dat}}{
 
   
   Data frame \code{dat} requires at least variables \code{Site}, 
-  \code{WYear}, \code{Year}, and \code{Y}.  Variable \code{Site} serves as a 
-  statistical-unit text descriptior.
+  \code{WYear}, \code{Year}, and \code{Y}.  Variable \code{Site} defines the 
+  sampling unit.
   
   Underlying statistical functions called by \code{TrendNPS_Cont} require two
-  separate temporal variables: \code{WYear} is a scalar-year value, while
-  \code{Year} is a factor.
+  separate temporal variables: \code{Year} is a factor and \code{WYear} is a 
+  scalar-year value.  \code{WYear} is shifted so that the year for which \code{Y}
+  is least variable is centered on 0. See Piepho & Ogutu (2002) for more 
+  information.
   
-  Ultimately, \code{WYear} enters the model as a trend effect, and designates
-  the survey occasions used in the fixed-effects portion of the trend model. 
-  The regression coefficient associated with \code{WYear} provides the basis 
-  for trend estimation and testing. In line with Piepho & Ogutu (2002), 
-  function \code{TrendNPS_Cont} reassigns the recorded temporal unit 
-  \code{WYear} in which the outcome \code{Y} is least variable as zero, with 
-  all other values \code{WYear} calculated with respect to this redefined 
-  zero point.
+  Ultimately, \code{WYear} represents time in the fixed-effects portion of the  
+  trend model. The regression coefficient associated with \code{WYear} provides
+  the basis for trend estimation and testing. 
   
-  Variable \code{Year} enters the model as a random effect, and identifies 
-  unique values for each survey occasion.  As a random effect, it provides 
+  Variable \code{Year} enters the model as a random effect and provides 
   the basis for estimation of random year-to-year variation among survey 
   occasions.
   
-  Variable \code{Y} must contain only positive non-zero values.  Analyses 
-  utilizing \code{method="PO"} or \code{method="PWIGLS"} assumes variable 
-  \code{Y} has been previously transformed to a logarithmic scale.
+  Variable \code{Y} must contain only positive non-zero values.  Trend analyses 
+  approached will implement a logarithmic transformation for trend modeling of 
+  variable \code{Y}, but the untransformed variable \code{Y} should be provided 
+  as an function call.
 }
 
 \section{Options for variable \code{type}}{
@@ -178,7 +195,7 @@ For long-term monitoring, \code{TrendNPS_Cont} assumes sampling
 \examples{
 
 #  ---- Read example data set.
-data(SEKIANC)
+data(LakeDataRep)
 
 #  ---- Load dependent packages. 
 pkgList <- c("lme4","lmerTest","spsurvey")
@@ -187,72 +204,75 @@ if (length(pkgList[!inst]) > 0) install.packages(pkgList[!inst])
 lapply(pkgList, library, character.only = TRUE)
 
 ###########################
-#  ---- A1. PO method: full random effects model.
-PO_ests <- TrendNPS_Cont(dat=SEKIANC, method="PO", type=NA, slope=TRUE, 
-                         stratum=NA, Y="Y", lat="Lat", long="Long",
-                         stage1wt="wgt", stage2wt="Panelwgt", str1prop=NA)
-# Error: number of observations (=80) <= number of random effects (=92) for 
-# term (1 + WYear | Site); the random-effects parameters and the residual 
-# variance (or scale parameter) are probably unidentifiable
+# Example 1: Trend analysis with the PO approach: stratification and full random 
+# effects model.
+PO_ests <- TrendNPS_Cont(alpha=0.1,dat=LakeDataRep, method="PO", slope=TRUE, 
+     stratum="Park", Y="Cl", str1prop=str1prop)
+PO_ests
+# $ModelEstimates
+#         mu       trend    SEtrend     sig2a       sig2t       sigat      sig2b
+#   1.269532 -0.07196304 0.05624014 0.2846501 0.009663692 -0.05208829 0.04079863
+#      sig2e      eta
+# 0.08133577 24.94572
 
-#  ---- Conclusion: the random effects are not estimable due to too few
-#  ---- observations.  Reduce the random effects model by removing the 
-#  ---- random slope term; i.e., set slope=FALSE.
+# $TrendTest
+#        trend    SEtrend    t-stat      eta    pvalue
+#  -0.07196304 0.05624014 -1.279567 24.94572 0.2124709
 
-#  ---- A2. PO method: reduced random effects model.
-PO_ests <- TrendNPS_Cont(dat=SEKIANC, method="PO", type=NA, slope=FALSE,
-                         stratum=NA, Y="Y", lat="Lat", long="Long",
-                         stage1wt="wgt", stage2wt="Panelwgt", str1prop=NA)
-round(PO_ests,4)
+# $TrendCI
+#  Annual Pct Change     CI low   CI high
+#        -0.06943471 -0.1546776 0.0244041
 
-#     mu  trend SEtrend  sig2a sig2t sigat sig2b  sig2e    eta
-#  3.964 0.0194  0.0322 0.3422     0     0     0 0.0161 3.6202
+###########################
+# Example 2: Trend analysis with the WLRDB approach: stratification and full random effects model.
+WLRDB_ests <- TrendNPS_Cont(alpha=0.1,dat=LakeDataRep, method="WLRDB",  
+         slope=TRUE, stratum="Park", Y="Cl", lat="ycoord",
+         long="xcoord",stage1wt="AdjWgt", stage2wt="PanelWt",
+         str1prop=str1prop)
+WLRDB_ests
+# $ModelEstimates
+#         mu      trend    SEtrend sig2a sig2t sigat sig2b    sig2e eta
+#  0.4218735 0.06037018 0.07802896     0     0     0     0 3.402272   4
 
-#  ---- Construct a 95\%-confidence interval on the trend estimate of 
-#  ---- the logged outcome.
-CI <- c(PO_ests$trend - qt(1-(0.05/2), PO_ests$eta) * PO_ests$SEtrend, 
-        PO_ests$trend + qt(1-(0.05/2), PO_ests$eta) * PO_ests$SEtrend)
-round(c(PO_ests$trend, CI),4)
+# $TrendTest
+#       trend    SEtrend    t-stat eta    pvalue
+#  0.06037018 0.07802896 0.7736894   4 0.4822974
 
-# 0.0194 -0.0737  0.1125
+# $TrendCI
+#  Annual Pct Change     CI low   CI high
+#         0.06222969 -0.1005534 0.2544735
 
-#  ---- Construct a 95\%-confidence interval on the trend estimate of 
-#  ---- the original outcome.  
-round(exp(c(PO_ests$trend, CI)),4)
-
-# 1.0196 0.9290 1.1191
-
-#  ---- Conduct a two-sided test of trend for an alternative hypothesis 
-#  ---- of trend in either direction.
-t_stat <- PO_ests$trend/ PO_ests$SEtrend
-p_value <- 2*(1-pt(abs(t_stat), PO_ests$eta, lower=TRUE))
-round(data.frame(t_stat,p_value) ,4)
-
-# 0.6038 0.5817
+#$DBests
+#  Year Est.Mean         SE WYear        Resid
+#  2008 4.505724 0.55610529     0  1.083475074
+#  2009 2.162006 0.20158290     1  0.288793000
+#  2010 1.712219 0.03578556     2 -0.004823561
+#  2011 1.592197 0.07584161     3 -0.137869385
+#  2012 2.611047 0.14932238     4  0.296397135
+#  2013 2.348186 0.18412120     5  0.129918636
 
 
 ###########################
-#  ---- B1. WLRDB method.
-WLRDB_ests <- TrendNPS_Cont(dat=SEKIANC, method="WLRDB", type=NA, 
-                            slope=FALSE, stratum=NA, Y="Y", lat="Lat",
-                            long="Long",stage1wt="wgt", stage2wt="Panelwgt",
-                            str1prop=NA)
-round(WLRDB_ests,4)
+# Example 3: Trend analysis with the PWIGLS method with type="Aonly".
+PWIGLS_Aonly_ests <- TrendNPS_Cont(alpha=0.1,dat=LakeDataRep, method="PWIGLS", 
+         type="Aonly", slope=TRUE, stratum="Park", Y="Cl", lat="ycoord",
+         long="xcoord", stage1wt="AdjWgt", stage2wt="PanelWt",
+         str1prop=str1prop)
+PWIGLS_Aonly_ests
 
-#      mu  trend SEtrend  sig2a sig2t sigat sig2b  sig2e   eta
-#  4.1914 -0.0177  0.0492     0     0     0     0 0.0002   4
+# $ModelEstimates
+#       mu       trend    SEtrend    sig2a     sig2t     sigat     sig2b
+# 1.441448 -0.08109772 0.09649006 10.66269 0.3102913 -1.818939 0.4271289
+#      sig2e      eta
+# 0.09145612 24.94572
 
+# $TrendTest
+#       trend    SEtrend     t-stat      eta    pvalue
+# -0.08109772 0.09649006 -0.8404774 24.94572 0.4086247
 
-###########################
-#  ---- C1. PWIGLS with type="Aonly".
-PWIGLS_Aonly_ests <- TrendNPS_Cont(dat=SEKIANC, method="PWIGLS", type="Aonly",
-                                   slope=FALSE, stratum=NA, Y="Y", lat="Lat",
-                                   long="Long",stage1wt="wgt", 
-                                   stage2wt="Panelwgt", str1prop=NA)
-round(PWIGLS_Aonly_ests,4)
-
-#      mu  trend SEtrend  sig2a sig2t sigat  sig2b  sig2e    eta
-#  3.8812 0.0383   0.031 6.2650     0     0 0.0732 0.0167 3.6202
+# $TrendCI
+#  Annual Pct Change     CI low    CI high
+#        -0.07789642 -0.2180231 0.08734037
 
 }
 \author{
@@ -286,8 +306,8 @@ Asparouhov, T. (2006).  General multi-level modeling with
   Natural Resource Report NPS/PWRO/NRR-2016/1233. National Park Service, Fort
   Collins, Colorado.
   
-  L.A. Starcevich, T. McDonald, A. Chung-MacCoubrey, A. Heard, and J. Nesmith
-  (2017). Trend Estimation for Complex Survey Designs. Natural Resource 
+  L.A. Starcevich, T. McDonald, A. Chung-MacCoubrey, A. Heard, and J. Nesmith.
+  2017. Trend Estimation for Complex Survey Designs. Natural Resource 
   Report NPS/xxxx/NRR-2017/xxxx. National Park Service, Fort Collins, 
   Colorado.
 }

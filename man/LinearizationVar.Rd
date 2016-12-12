@@ -2,35 +2,37 @@
 % Please edit documentation in R/LinearizationVar.r
 \name{LinearizationVar}
 \alias{LinearizationVar}
-\title{Calculate linearization variance of trend (Skinner, et al. 1989)}
+\title{Calculate linearization variance of trend for the PWIGLS trend approach.}
 \usage{
 LinearizationVar(Site, wij, xij, eij, varYij)
 }
 \arguments{
-\item{Site}{vector of PSUs.}
+\item{Site}{vector of Site names.}
 
-\item{wij}{inclusion weight = PSU wt * SSU wt.}
+\item{wij}{vector of inclusion weights = Site-level design weight * Year-level panel weight.}
 
-\item{xij}{year var for trend estimation.}
+\item{xij}{vector of shifted year variables (WYear) for trend estimation.}
 
-\item{eij}{residual.}
+\item{eij}{vector of residuals from PWIGLS trend model.}
 
-\item{varYij}{total variance for yij, estimated from PWIGLS estimates of
-variance from P&O.}
+\item{varYij}{vector of total variance estimates for yij, estimated from PWIGLS variance 
+components estimates.}
 }
 \value{
-Something cool.
+Scalar variance estimate of the trend regression coefficient.
 }
 \description{
-Calculate the linearization variance of the trend coefficient
+Calculate the linearization variance of the trend coefficient with a Taylor
+series approximation. This is an internal function called from PWIGLS_ALL.
 }
 \details{
-Something cool.
+The linearization variance is based on a Taylor series approximation. See 
+Skinner (1989, p. 82-83) for more information.
 }
 \examples{
 \dontrun{
 #  ---- Read example data set.
-SEKIANC_orig = LinearizationVar(Site,wij,xij,eij,varYij)
+TrendVar = LinearizationVar(Site,wij,xij,eij,varYij)
 }
 
 
@@ -39,9 +41,10 @@ SEKIANC_orig = LinearizationVar(Site,wij,xij,eij,varYij)
 Leigh Ann Starcevich of Western EcoSystems Technology, Inc.
 }
 \references{
-Skinner 1989., p. 82-83.
+Skinner, C.J., D. Holt, and T.M.F. Smith. 1989. Analysis of Complex Surveys. 
+New York: Wiley.
 }
 \seealso{
-\code{TrendNPS_Cont}, \code{LinearizationVar}
+\code{TrendNPS_Cont}, \code{LinearizationVar_StRS}
 }
 

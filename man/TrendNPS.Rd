@@ -4,15 +4,23 @@
 \name{TrendNPS}
 \alias{TrendNPS}
 \alias{TrendNPS-package}
-\title{TrendNPS: A package for dealing with trending stuff for the NPS.}
+\title{TrendNPS: An R package for trend analysis for data from complex survey designs.}
 \description{
-The TrendNPS package does trend stuff.  It's pretty cool.
+TrendNPS: An R package for trend analysis for data from complex survey designs.
 }
+\section{Description}{
+
+The TrendNPS package provides trend analysis tools for complex survey designs.  
+Please refer to the accompanying National Park Service Natural Resource Report (NRR) series report
+Starcevich et al. (2017) for background on how and under what circumstances to use the trend analysis methods.
+Example analyses are provided using the tools offered in thte TrendNPS R package.
+}
+
 \section{TrendNPS functions}{
 
-TrendNPS_Cont
-LinearizationVar_StRS
-LinearizationVar
+TrendNPS_Cont, 
+LinearizationVar_StRS, 
+LinearizationVar, 
 PWIGLS_ALL
 }
 

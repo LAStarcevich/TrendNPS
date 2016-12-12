@@ -20,6 +20,7 @@
 #'   and year intercepts, and an optional random site-level slope effect may be 
 #'   included.
 #'   
+#' @param alpha The probability of a Type I error. 
 #'   
 #' @param dat	Data frame containing columns at least for \code{Site}, 
 #'   \code{WYear}, \code{Year}, and the continuous outcome of interest \code{Y}.
@@ -224,78 +225,77 @@
 #' lapply(pkgList, library, character.only = TRUE)
 #' 
 #' ###########################
-#' Example 1: Trend analysis with the PO approach: stratification and full random 
-#' effects model.
+#' # Example 1: Trend analysis with the PO approach: stratification and full random 
+#' # effects model.
 #' PO_ests <- TrendNPS_Cont(alpha=0.1,dat=LakeDataRep, method="PO", slope=TRUE, 
 #'      stratum="Park", Y="Cl", str1prop=str1prop)
 
 #' PO_ests
-#' $ModelEstimates
-#'          mu       trend    SEtrend     sig2a       sig2t       sigat      sig2b
-#'    1.269532 -0.07196304 0.05624014 0.2846501 0.009663692 -0.05208829 0.04079863
-#'       sig2e      eta
-#'  0.08133577 24.94572
+#' # $ModelEstimates
+#' #         mu       trend    SEtrend     sig2a       sig2t       sigat      sig2b
+#' #   1.269532 -0.07196304 0.05624014 0.2846501 0.009663692 -0.05208829 0.04079863
+#' #      sig2e      eta
+#' # 0.08133577 24.94572
 #' 
-#' $TrendTest
-#'         trend    SEtrend    t-stat      eta    pvalue
-#'   -0.07196304 0.05624014 -1.279567 24.94572 0.2124709
+#' # $TrendTest
+#' #        trend    SEtrend    t-stat      eta    pvalue
+#' #  -0.07196304 0.05624014 -1.279567 24.94572 0.2124709
 #' 
-#' $TrendCI
-#'   Annual Pct Change     CI low   CI high
-#'         -0.06943471 -0.1546776 0.0244041
-
+#' # $TrendCI
+#' #  Annual Pct Change     CI low   CI high
+#' #        -0.06943471 -0.1546776 0.0244041
 #' 
 #' ###########################
-#' Example 2: Trend analysis with the WLRDB approach: stratification and full random effects model.
+#' # Example 2: Trend analysis with the WLRDB approach: stratification and full random effects model.
 #' WLRDB_ests <- TrendNPS_Cont(alpha=0.1,dat=LakeDataRep, method="WLRDB",  
 #'          slope=TRUE, stratum="Park", Y="Cl", lat="ycoord",
 #'          long="xcoord",stage1wt="AdjWgt", stage2wt="PanelWt",
 #'          str1prop=str1prop)
 #' WLRDB_ests
 
-#' $ModelEstimates
-#'          mu      trend    SEtrend sig2a sig2t sigat sig2b    sig2e eta
-#'   0.4218735 0.06037018 0.07802896     0     0     0     0 3.402272   4
+#' # $ModelEstimates
+#' #         mu      trend    SEtrend sig2a sig2t sigat sig2b    sig2e eta
+#' #  0.4218735 0.06037018 0.07802896     0     0     0     0 3.402272   4
 #' 
-#' $TrendTest
-#'        trend    SEtrend    t-stat eta    pvalue
-#'   0.06037018 0.07802896 0.7736894   4 0.4822974
+#' # $TrendTest
+#' #       trend    SEtrend    t-stat eta    pvalue
+#' #  0.06037018 0.07802896 0.7736894   4 0.4822974
 #' 
-#' $TrendCI
-#'   Annual Pct Change     CI low   CI high
-#'          0.06222969 -0.1005534 0.2544735
+#' # $TrendCI
+#' #  Annual Pct Change     CI low   CI high
+#' #         0.06222969 -0.1005534 0.2544735
 #' 
-#' $DBests
-#'   Year Est.Mean         SE WYear        Resid
-#'   2008 4.505724 0.55610529     0  1.083475074
-#'   2009 2.162006 0.20158290     1  0.288793000
-#'   2010 1.712219 0.03578556     2 -0.004823561
-#'   2011 1.592197 0.07584161     3 -0.137869385
-#'   2012 2.611047 0.14932238     4  0.296397135
-#'   2013 2.348186 0.18412120     5  0.129918636
+#' #$DBests
+#' #  Year Est.Mean         SE WYear        Resid
+#' #  2008 4.505724 0.55610529     0  1.083475074
+#' #  2009 2.162006 0.20158290     1  0.288793000
+#' #  2010 1.712219 0.03578556     2 -0.004823561
+#' #  2011 1.592197 0.07584161     3 -0.137869385
+#' #  2012 2.611047 0.14932238     4  0.296397135
+#' #  2013 2.348186 0.18412120     5  0.129918636
 #' 
 #' 
 #' ###########################
-#' Example 3: Trend analysis with the PWIGLS method with type="Aonly".
+#' # Example 3: Trend analysis with the PWIGLS method with type="Aonly".
 #' PWIGLS_Aonly_ests <- TrendNPS_Cont(alpha=0.1,dat=LakeDataRep, method="PWIGLS", 
 #'          type="Aonly", slope=TRUE, stratum="Park", Y="Cl", lat="ycoord",
 #'          long="xcoord", stage1wt="AdjWgt", stage2wt="PanelWt",
 #'          str1prop=str1prop)
 #' PWIGLS_Aonly_ests
 #' 
-#' $ModelEstimates
-#'        mu       trend    SEtrend    sig2a     sig2t     sigat     sig2b
-#'  1.441448 -0.08109772 0.09649006 10.66269 0.3102913 -1.818939 0.4271289
-#'       sig2e      eta
-#'  0.09145612 24.94572
+#' # $ModelEstimates
+#' #       mu       trend    SEtrend    sig2a     sig2t     sigat     sig2b
+#' # 1.441448 -0.08109772 0.09649006 10.66269 0.3102913 -1.818939 0.4271289
+#' #      sig2e      eta
+#' # 0.09145612 24.94572
 #' 
-#' $TrendTest
-#'        trend    SEtrend     t-stat      eta    pvalue
-#'  -0.08109772 0.09649006 -0.8404774 24.94572 0.4086247
+#' # $TrendTest
+#' #       trend    SEtrend     t-stat      eta    pvalue
+#' # -0.08109772 0.09649006 -0.8404774 24.94572 0.4086247
 #' 
-#' $TrendCI
-#'   Annual Pct Change     CI low    CI high
-#'         -0.07789642 -0.2180231 0.08734037
+#' # $TrendCI
+#' #  Annual Pct Change     CI low    CI high
+#' #        -0.07789642 -0.2180231 0.08734037
 #' 
 TrendNPS_Cont<-function(alpha,dat,method,slope=TRUE,type=NA,stratum=NA,Y,lat=NA,long=NA,stage1wt=NA,stage2wt=NA,str1prop=NA,nbhd=TRUE) {
 
@@ -429,7 +429,7 @@ if(method %in% c("SLRDB","WLRDB")) {
 	MeanEsts$WYear = WYears
 # calculate trend in logged mean over time
 	if(method=="SLRDB")  fit<-lm(log(Est.Mean) ~ WYear, data=MeanEsts)
-	if(method=="WLRDB")  fit<-lm(log(Est.Mean) ~ WYear, weights=1/(SE^2), data=MeanEsts)
+	if(method=="WLRDB")  fit<-lm(log(Est.Mean) ~ WYear, weights=1/(MeanEsts$SE^2), data=MeanEsts)
 
   	mu <- coef(fit)[1]				# mu
 	trend<- coef(fit)[2]				# slope

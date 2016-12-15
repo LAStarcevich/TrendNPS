@@ -12,7 +12,7 @@ Imports:
     lmerTest,
     spsurvey,
     stats
-Depends: lme4
+Depends: lme4, R(>= 2.10.0)
 NeedsCompilation: no
 Packaged: 2016-10-11 10:37:00 MDT; jmitchell
 LazyData: true

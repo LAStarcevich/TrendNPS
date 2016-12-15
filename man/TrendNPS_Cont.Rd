@@ -206,6 +206,7 @@ lapply(pkgList, library, character.only = TRUE)
 ###########################
 # Example 1: Trend analysis with the PO approach: stratification and full random 
 # effects model.
+str1prop <- 808.6936/(808.6936+362.8214)
 PO_ests <- TrendNPS_Cont(alpha=0.1,dat=LakeDataRep, method="PO", slope=TRUE, 
      stratum="Park", Y="Cl", str1prop=str1prop)
 PO_ests
@@ -225,6 +226,7 @@ PO_ests
 
 ###########################
 # Example 2: Trend analysis with the WLRDB approach: stratification and full random effects model.
+str1prop <- 808.6936/(808.6936+362.8214)
 WLRDB_ests <- TrendNPS_Cont(alpha=0.1,dat=LakeDataRep, method="WLRDB",  
          slope=TRUE, stratum="Park", Y="Cl", lat="ycoord",
          long="xcoord",stage1wt="AdjWgt", stage2wt="PanelWt",
@@ -254,6 +256,7 @@ WLRDB_ests
 
 ###########################
 # Example 3: Trend analysis with the PWIGLS method with type="Aonly".
+str1prop <- 808.6936/(808.6936+362.8214)
 PWIGLS_Aonly_ests <- TrendNPS_Cont(alpha=0.1,dat=LakeDataRep, method="PWIGLS", 
          type="Aonly", slope=TRUE, stratum="Park", Y="Cl", lat="ycoord",
          long="xcoord", stage1wt="AdjWgt", stage2wt="PanelWt",

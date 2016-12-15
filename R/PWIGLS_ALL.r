@@ -158,9 +158,9 @@ if(slope) {
 	}
 
 # Sum across rows to pick up each weight 
-	dat$SiteWt<-rowSums(A)			
-	dat$SlopeWt<-rowSums(T)
-	dat$YearWt<-rowSums(B)
+	dat$SiteWt<-rowSums(as.matrix(A))		
+	dat$SlopeWt<-rowSums(as.matrix(T))
+	dat$YearWt<-rowSums(as.matrix(B))
 
 	if(is.na(stratum)) fit.PWIGLS<-lmer(LogY ~ WYear +(-1+YearWt|Year) +(-1+SiteWt+SlopeWt|Site), data=dat, REML=FALSE)  
 	if(!is.na(stratum)) fit.PWIGLS<-lmer(LogY ~ WYear*Stratum +(-1+YearWt|Year) +(-1+SiteWt+SlopeWt|Site), data=dat, REML=FALSE)  
@@ -180,9 +180,8 @@ if(!slope) {
 	}
 
 # Sum across rows to pick up each weight 
-	dat$SiteWt<-rowSums(A)			
-	#dat$SlopeWt<-rowSums(T)
-	dat$YearWt<-rowSums(B)
+	dat$SiteWt<-rowSums(as.matrix(A))		
+	dat$YearWt<-rowSums(as.matrix(B))
 	if(is.na(stratum)) fit.PWIGLS<-lmer(LogY ~ WYear +(-1+YearWt|Year) +(-1+SiteWt|Site), data=dat, REML=FALSE)  
 	if(!is.na(stratum)) fit.PWIGLS<-lmer(LogY ~ WYear*Stratum +(-1+YearWt|Year) +(-1+SiteWt|Site), data=dat, REML=FALSE)  
 
@@ -192,4 +191,3 @@ if(!slope) {
 
 return(fit.PWIGLS)
 } 
-

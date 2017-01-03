@@ -5,19 +5,9 @@
 \alias{LakeDataRep}
 \title{NPS lake chemistry monitoring data for sites with at least two visits.  Data have been merged with GRTS sampling
 design factors.}
-\format{A data frame with 77 rows and 17 variables.}
-\usage{
-data(LakeDataRep)
-}
-\description{
-NPS lake chemistry monitoring data for sites with at least two visits.  Data have been merged with GRTS sampling
-design factors.
-}
-\references{
-Heard, A.M., L.A. H. Starcevich, J.O. Sickman, M. Goldin Rose, and D.W. Schweizer. 2012. 
-Sierra Nevada Network lake monitoring protocol. Natural Resource Report NPS/SIEN/NRR-2012/551. 
-National Park Service, Fort Collins, Colorado.
+\format{A data frame with 77 rows and 17 variables.
 
+\describe{
 A dataset containing the Sierra Nevada Network lake chemistry data from Sequoia-Kings Canyon and Yosemite National Parks. 
 See Starcevich et al. (2017) for more information. The variables are as follows:
 
@@ -26,8 +16,8 @@ See Starcevich et al. (2017) for more information. The variables are as follows:
   \item Park. National Park used as stratification variable. (SEKI = Sequoia-Kings Canyon, YOSE = Yosemite)
   \item Year. The observation year. (2008--2013)
   \item WYear. The observation year minus 2008. (0--5)
-  \item xcoord. UTM-xxN easting. 
-  \item ycoord. UTM-xxN northing.  
+  \item xcoord. UTM easting. 
+  \item ycoord. UTM northing.  
   \item mdcaty. Multi-density category representing cost class from the unequal probability sample draw.
   \item panel. Temporal revisit panel, or oversample when an oversample site was used. 
   \item wgt. Design weight from original GRTS sample draw.
@@ -40,6 +30,18 @@ See Starcevich et al. (2017) for more information. The variables are as follows:
   \item AdjWgt. Design weight adjusted for frame error and nonresponse error. 
   \item PanelWt. Panel weight, or the inverse of the panel inclusion probability. 
 }
+}}
+\usage{
+data(LakeDataRep)
+}
+\description{
+NPS lake chemistry monitoring data for sites with at least two visits.  Data have been merged with GRTS sampling
+design factors.
+}
+\references{
+Heard, A. M., L. A. H. Starcevich, J. O. Sickman, M. Goldin Rose, and D. W. Schweizer. 2012. 
+Sierra Nevada Network lake monitoring protocol. Natural Resource Report NPS/SIEN/NRR-2012/551. 
+National Park Service, Fort Collins, Colorado.
 }
 \keyword{datasets}
 

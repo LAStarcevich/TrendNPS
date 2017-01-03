@@ -80,7 +80,7 @@ A list containing three or four elements, depending on the specified trend metho
   the trend standard error, the t-statistic, degrees of freedom, and p-value for a two-sided test of no trend.
   
   The contents of the third list element, TrendCI, include the back-transformed trend on the original scale 
-  calulated as an annual percent change and the lower and upper (1-alpha)*100%-confidence interval bounds. 
+  calculated as an annual proportional change and the lower and upper (1-\code{alpha})*100\%-confidence interval bounds. 
   
   A fourth list element, DBests, contains the annual design-based estimates and is returned only when the 
   SLRDB and WLRDB trend approaches are used.  The design-based estimates may be used to assess the assumption
@@ -90,7 +90,8 @@ A list containing three or four elements, depending on the specified trend metho
   
   \code{Year}      \tab	Year of survey. \cr
   \code{Est.Mean}   \tab	Design-based estimate of the mean of the outcome of interest. \cr
-  \code{SE} \tab	   Estimated standard error of the design-based mean estimate using the neighborhood variace estimator if nbhd = TRUE. \cr
+  \code{SE} \tab	   Estimated standard error of design-based mean estimate via neighborhood 
+  variace estimator if \code{nbhd = TRUE}. \cr
   \code{WYear}   \tab	WYear variable. \cr
   \code{Resid}     \tab	Residuals from the linear model fit. \cr
   
@@ -134,17 +135,18 @@ For long-term monitoring, \code{TrendNPS_Cont} assumes single annual sampling
   
   Spatially balanced samples utilizing \code{method="SLRDB"} or 
   \code{method="WLRDB"} require specification of \code{lat} and \code{long} 
-  on setting the neighborhood variance estimator \code{nbhd=TRUE}.  Set 
-  option \code{nbhd=FALSE} for non-spatially balanced designs so that the 
-  \code{"SLRDB"} and \code{"WLRDB"} methods assume independent random 
-  sampling for standard errors.  
+  on setting the neighborhood variance estimator \code{nbhd=TRUE}.  If 
+  spatial balance cannot be assumed, set option \code{nbhd=FALSE} for 
+  non-spatially balanced designs so that the \code{"SLRDB"} and 
+  \code{"WLRDB"} methods assume independent random sampling for standard 
+  errors.
   
-  The stratification variable \code{stratum} is required for 
-  all methods when design strata are used.  Note that 
-  \code{method="PWIGLS"} further requires a value for \code{type}.  See 
-  section "Options for variable \code{type}" below.
+  The stratification variable \code{stratum} is required for all methods when
+  design strata are used.  Note that \code{method="PWIGLS"} further requires
+  a value for \code{type}.  See section "Options for variable \code{type}"
+  below.
   
-  Variables \code{stage1wt} and \code{stage2wt} must be specified for all  
+  Variables \code{stage1wt} and \code{stage2wt} must be specified for all 
   methods except the unweighted \code{method="PO"}.
 }
 
@@ -170,7 +172,7 @@ For long-term monitoring, \code{TrendNPS_Cont} assumes single annual sampling
   occasions.
   
   Variable \code{Y} must contain only positive non-zero values.  Trend analyses 
-  approached will implement a logarithmic transformation for trend modeling of 
+  approaches will implement a logarithmic transformation for trend modeling of 
   variable \code{Y}, but the untransformed variable \code{Y} should be provided 
   as an function call.
 }
@@ -287,30 +289,30 @@ Asparouhov, T. (2006).  General multi-level modeling with
   sampling weights. Communications in Statistics - Theory and Methods 35: 
   439-460.
   
-  Little, J.A.R., and D.B. Rubin. 2002. Statistical analysis with missing 
+  Little, J. A. R., and D. B. Rubin. (2002). Statistical analysis with missing 
   data, 2nd edition. John Wiley and Sons, Inc., New Jersey.
   
-  Oh, H.L., and F.J. Scheuren. 1983. Weighting adjustment for unit 
+  Oh, H. L., and F. J. Scheuren. (1983). Weighting adjustment for unit 
   nonresponse. Pages 143-184 in W.G. Madow, I. Olkin, and D.B. Rubin, 
   editors. Incomplete data and in sample surveys. (Vol. 2). Academic Press, 
   New York.
   
-  Pfeffermann, D., C.J. Skinner, D.J. Holmes, H. Goldstein, and J. Rasbash 
+  Pfeffermann, D., C. J. Skinner, D. J. Holmes, H. Goldstein, and J. Rasbash 
   (1998).  Weighting for unequal selection probabilities in multilevel 
   models. Journal of the Royal Statistical Society, Series B 60(1): 23-40.
   
-  Piepho, H.P., & Ogutu, J.O. (2002).  A simple mixed model for trend 
+  Piepho, H. P., & Ogutu, J. O. (2002).  A simple mixed model for trend 
   analysis in wildlife populations.  Journal of Agricultural, Biological, and
   Environmental Statistics, 7(3), 350-360.
   
-  L.A. Starcevich, G. DiDonato, T. McDonald, and J. Mitchell. 2016. A GRTS 
+  L. A. Starcevich, G. DiDonato, T. McDonald, and J. Mitchell. (2016). A GRTS 
   user's manual for the SDrawNPS package: A graphical user interface for 
   generalized random tessellation stratified (GRTS) sampling and estimation. 
   Natural Resource Report NPS/PWRO/NRR-2016/1233. National Park Service, Fort
   Collins, Colorado.
   
-  L.A. Starcevich, T. McDonald, A. Chung-MacCoubrey, A. Heard, and J. Nesmith.
-  2017. Trend Estimation for Complex Survey Designs. Natural Resource 
+  L. A. Starcevich, T. McDonald, A. Chung-MacCoubrey, A. Heard, and J. Nesmith.
+  (2017). Trend Estimation for Complex Survey Designs. Natural Resource 
   Report NPS/xxxx/NRR-2017/xxxx. National Park Service, Fort Collins, 
   Colorado.
 }

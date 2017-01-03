@@ -55,7 +55,7 @@
 #'   sampling weights. Communications in Statistics - Theory and Methods 35: 
 #'   439-460.
 #'
-#'   Pfeffermann, D., C.J. Skinner, D.J. Holmes, H. Goldstein, and J. Rasbash 
+#'   Pfeffermann, D., C. J. Skinner, D. J. Holmes, H. Goldstein, and J. Rasbash 
 #'   (1998).  Weighting for unequal selection probabilities in multilevel 
 #'   models. Journal of the Royal Statistical Society, Series B 60(1): 23-40.
 #'   

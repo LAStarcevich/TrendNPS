@@ -45,7 +45,7 @@ TrendVar = LinearizationVar_StRS(Site,wij,xij,eij,varYij,str1prop)
 Leigh Ann Starcevich of Western EcoSystems Technology, Inc.
 }
 \references{
-Skinner, C.J., D. Holt, and T.M.F. Smith. 1989. Analysis of Complex Surveys. 
+Skinner, C. J., D. Holt, and T. M. F. Smith. 1989. Analysis of Complex Surveys. 
 New York: Wiley.
 }
 \seealso{

@@ -1,0 +1,19 @@
+## -*- R -*-
+citHeader("To cite the R package 'TrendNPS' in publications use:")
+
+year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date)
+vers <- paste("R package version", meta$Version)
+
+citEntry(entry="Manual",
+         title = "TrendNPS: NPS Trend Analyses for Complex Survey Designs",
+         author = personList(as.person("Leigh Ann Starcevich"),
+                             as.person("Jason Mitchell")),
+         year = year,
+         note = vers,
+         
+         textVersion =
+           paste("Leigh Ann Starcevich, Jason Mitchell",
+                 " (",
+                 year,
+                 "). TrendNPS: NPS Trend Analyses for Complex Survey Designs. ",
+                 vers, ".", sep=""))

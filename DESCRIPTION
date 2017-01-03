@@ -1,8 +1,8 @@
 Package: TrendNPS
 Type: Package
-Title: NPS Trend Analyses for Survey Designs
-Version: 0.0.2
-Date: 2016-10-11
+Title: NPS Trend Analyses for Complex Survey Designs
+Version: 0.0.3
+Date: 2017-01-03
 Author: Leigh Ann Starcevich <lstarcevich@west-inc.com> [aut, cre]
 Maintainer: Jason Mitchell <jmitchell@west-inc.com>
 Description: Analyze complex survey designs via trend estimation.

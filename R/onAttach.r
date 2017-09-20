@@ -1,6 +1,6 @@
 #' @import  spsurvey stats
 #' @importFrom lmerTest lmer
-#' @importFrom lme4 VarCorr getME fixef
+#' @importFrom lme4 VarCorr getME fixef glmer glmerControl
 .onAttach <- function(libname, pkgname){
   
   v <- utils::packageVersion(pkgname) 

@@ -1,7 +1,7 @@
 Package: TrendNPS
 Type: Package
 Title: NPS Trend Analyses for Complex Survey Designs
-Version: 0.0.3
+Version: 0.0.4
 Date: 2017-01-03
 Author: Leigh Ann Starcevich <lstarcevich@west-inc.com> [aut, cre]
 Maintainer: Jason Mitchell <jmitchell@west-inc.com>
@@ -16,4 +16,4 @@ Depends: lme4, R(>= 2.10.0)
 NeedsCompilation: no
 Packaged: 2016-10-11 10:37:00 MDT; jmitchell
 LazyData: true
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

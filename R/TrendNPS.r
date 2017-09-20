@@ -9,10 +9,10 @@
 #'   thte TrendNPS R package.
 #' 
 #' @section TrendNPS functions:
-#' TrendNPS_Cont, 
-#' LinearizationVar_StRS, 
-#' LinearizationVar, 
-#' PWIGLS_ALL 
+#' \code{TrendNPS_Cont}, 
+#' \code{LinearizationVar_StRS}, 
+#' \code{LinearizationVar}, 
+#' \code{PWIGLS_ALL}
 #'
 #' @docType package
 #' @name TrendNPS
@@ -32,7 +32,7 @@ NULL
 #'
 #' \itemize{
 #'   \item Site. Lake identifier.
-#'   \item Park. National Park used as stratification variable. (SEKI = Sequoia-Kings Canyon, YOSE = Yosemite)
+#'   \item Park. National Park used as stratification variable. (\code{SEKI} = Sequoia-Kings Canyon, \code{YOSE} = Yosemite)
 #'   \item Year. The observation year. (2008--2013)
 #'   \item WYear. The observation year minus 2008. (0--5)
 #'   \item xcoord. UTM easting. 
@@ -72,7 +72,7 @@ NULL
 #' \itemize{
 #'   \item Site. Lake identifier.
 #'   \item Year. The observation year. (2008--2013)
-#'   \item Park. National Park used as stratification variable. (SEKI = Sequoia-Kings Canyon, YOSE = Yosemite)
+#'   \item Park. National Park used as stratification variable. (\code{SEKI} = Sequoia-Kings Canyon, \code{YOSE} = Yosemite)
 #'   \item Elevation_m. Lake elevation in meters.
 #'   \item pH. pH measurement of lake. 
 #'   \item Cl. Chloride measurement of lake. 
@@ -101,7 +101,7 @@ NULL
 #'
 #' \itemize{
 #'   \item siteID. Lake identifier.
-#'   \item Park. National Park used as stratification variable. (SEKI = Sequoia-Kings Canyon, YOSE = Yosemite)
+#'   \item Park. National Park used as stratification variable. (\code{SEKI} = Sequoia-Kings Canyon, \code{YOSE} = Yosemite)
 #'   \item WYear. The observation year minus 2008. (0--5)
 #'   \item xcoord. UTM easting. 
 #'   \item ycoord. UTM northing.  
@@ -119,7 +119,7 @@ NULL
 #'   Collins, Colorado.
 #'   
 #'   Kincaid, T. M. and Olsen, A. R. 2015. spsurvey: Spatial Survey Design and
-#'   Analysis. R package version 3.1. URL:http://www.epa.gov/nheerl/arm/.
+#'   Analysis. R package version 3.1. \url{http://www.epa.gov/nheerl/arm/}.
 #' 
 NULL
 
@@ -137,7 +137,7 @@ NULL
 #' 
 #' \itemize{
 #'   \item Site. Sampling unit selected with GRTS sampling.
-#'   \item Park. National Park. KATM = Katmai NP and KEFJ = Kenai Fjords NP.
+#'   \item Park. National Park. \code{KATM} = Katmai NP and \code{KEFJ} = Kenai Fjords NP.
 #'   \item Year. Survey year formatted as a factor for random effects estimation.
 #'   \item WYear. Scalar year covariate for trend analysis.
 #'   \item Gradient. Site gradient (degrees).
@@ -151,7 +151,7 @@ NULL
 #' @references Alaska Ocean Observing System Gulf of Alaska Data Integration
 #'   Portal. 2017. Nearshore: Intertidal Systems in Gulf of Alaska data
 #'   available at: 
-#'   http://portal.aoos.org/gulf-of-alaska.php#metadata/53c052b6-8874-46d1-b40a-acc615a3879a/project/files.
+#'   \url{http://portal.aoos.org/gulf-of-alaska.php#metadata/53c052b6-8874-46d1-b40a-acc615a3879a/project/files}.
 #'   
 NULL
 
@@ -170,7 +170,7 @@ NULL
 #' 
 #' \itemize{ 
 #'   \item Site. Sampling unit selected with GRTS sampling. 
-#'   \item Park. National Park. KATM = Katmai NP and KEFJ = Kenai Fjords NP.
+#'   \item Park. National Park. \code{KATM} = Katmai NP and \code{KEFJ} = Kenai Fjords NP.
 #'   \item Quad. Quadrat within Site. 
 #'   \item Elev. Elevation class within \code{Quad} Quadrat.
 #'   \item Year. Survey year formatted as a factor for random effects estimation.
@@ -185,6 +185,6 @@ NULL
 #' @references Alaska Ocean Observing System Gulf of Alaska Data Integration
 #'   Portal. 2017. Nearshore: Intertidal Systems in Gulf of Alaska data
 #'   available at: 
-#'   http://portal.aoos.org/gulf-of-alaska.php#metadata/53c052b6-8874-46d1-b40a-acc615a3879a/project/files.
+#'   \url{http://portal.aoos.org/gulf-of-alaska.php#metadata/53c052b6-8874-46d1-b40a-acc615a3879a/project/files}.
 #'   
 NULL 

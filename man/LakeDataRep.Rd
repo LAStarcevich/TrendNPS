@@ -3,17 +3,17 @@
 \docType{data}
 \name{LakeDataRep}
 \alias{LakeDataRep}
-\title{NPS lake chemistry monitoring data for sites with at least two visits.  Data have been merged with GRTS sampling
-design factors.}
+\title{NPS lake chemistry monitoring data for sites with at least two visits.  Data
+have been merged with GRTS sampling design factors.}
 \format{A data frame with 77 rows and 17 variables.
 
-\describe{
-A dataset containing the Sierra Nevada Network lake chemistry data from Sequoia-Kings Canyon and Yosemite National Parks. 
-See Starcevich et al. (2017) for more information. The variables are as follows:
+\describe{ A dataset containing the Sierra Nevada Network lake chemistry data
+from Sequoia-Kings Canyon and Yosemite National Parks. See Starcevich et al.
+(2017) for more information. The variables are as follows:
 
 \itemize{
   \item Site. Lake identifier.
-  \item Park. National Park used as stratification variable. (SEKI = Sequoia-Kings Canyon, YOSE = Yosemite)
+  \item Park. National Park used as stratification variable. (\code{SEKI} = Sequoia-Kings Canyon, \code{YOSE} = Yosemite)
   \item Year. The observation year. (2008--2013)
   \item WYear. The observation year minus 2008. (0--5)
   \item xcoord. UTM easting. 
@@ -35,13 +35,13 @@ See Starcevich et al. (2017) for more information. The variables are as follows:
 data(LakeDataRep)
 }
 \description{
-NPS lake chemistry monitoring data for sites with at least two visits.  Data have been merged with GRTS sampling
-design factors.
+NPS lake chemistry monitoring data for sites with at least two visits.  Data
+have been merged with GRTS sampling design factors.
 }
 \references{
-Heard, A. M., L. A. H. Starcevich, J. O. Sickman, M. Goldin Rose, and D. W. Schweizer. 2012. 
-Sierra Nevada Network lake monitoring protocol. Natural Resource Report NPS/SIEN/NRR-2012/551. 
-National Park Service, Fort Collins, Colorado.
+Heard, A. M., L. A. H. Starcevich, J. O. Sickman, M. Goldin Rose,
+  and D. W. Schweizer. 2012. Sierra Nevada Network lake monitoring protocol.
+  Natural Resource Report NPS/SIEN/NRR-2012/551. National Park Service, Fort
+  Collins, Colorado.
 }
 \keyword{datasets}
-

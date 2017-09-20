@@ -6,14 +6,14 @@
 \title{NPS lake chemistry monitoring data for all sites.}
 \format{A data frame with 130 rows and 6 variables.
 
-\describe{
-A dataset containing the Sierra Nevada Network lake chemistry data from Sequoia-Kings Canyon and Yosemite National Parks. 
-See Starcevich et al. (2017) for more information. The variables are as follows:
+\describe{ A dataset containing the Sierra Nevada Network lake chemistry data
+from Sequoia-Kings Canyon and Yosemite National Parks. See Starcevich et al.
+(2017) for more information. The variables are as follows:
 
 \itemize{
   \item Site. Lake identifier.
   \item Year. The observation year. (2008--2013)
-  \item Park. National Park used as stratification variable. (SEKI = Sequoia-Kings Canyon, YOSE = Yosemite)
+  \item Park. National Park used as stratification variable. (\code{SEKI} = Sequoia-Kings Canyon, \code{YOSE} = Yosemite)
   \item Elevation_m. Lake elevation in meters.
   \item pH. pH measurement of lake. 
   \item Cl. Chloride measurement of lake. 
@@ -26,9 +26,9 @@ data(LakeData_orig)
 NPS lake chemistry monitoring data for all sites.
 }
 \references{
-Heard, A. M., L. A. H. Starcevich, J. O. Sickman, M. Goldin Rose, and D. W. Schweizer. 2012. 
-Sierra Nevada Network lake monitoring protocol. Natural Resource Report NPS/SIEN/NRR-2012/551. 
-National Park Service, Fort Collins, Colorado.
+Heard, A. M., L. A. H. Starcevich, J. O. Sickman, M. Goldin Rose,
+  and D. W. Schweizer. 2012. Sierra Nevada Network lake monitoring protocol.
+  Natural Resource Report NPS/SIEN/NRR-2012/551. National Park Service, Fort
+  Collins, Colorado.
 }
 \keyword{datasets}
-

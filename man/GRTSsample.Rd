@@ -6,13 +6,15 @@
 \title{NPS lake chemistry GRTS sample.}
 \format{A data frame with 461 rows and 10 variables.
 
-\describe{The design file containing the Sierra Nevada Network lake chemistry GRTS sample draw. Sites were stratified by Park
-and unequal probability sampling relative to a cost class (\code{mdcaty}) were drawn. The sample was drawn using the \code{spsurvey}
-package (Kincaid and Olsen 2015). The variables are as follows:
+\describe{The design file containing the Sierra Nevada Network lake chemistry
+GRTS sample draw. Sites were stratified by Park and unequal probability
+sampling relative to a cost class (\code{mdcaty}) were drawn. The sample was
+drawn using the \code{spsurvey} package (Kincaid and Olsen 2015). The
+variables are as follows:
 
 \itemize{
   \item siteID. Lake identifier.
-  \item Park. National Park used as stratification variable. (SEKI = Sequoia-Kings Canyon, YOSE = Yosemite)
+  \item Park. National Park used as stratification variable. (\code{SEKI} = Sequoia-Kings Canyon, \code{YOSE} = Yosemite)
   \item WYear. The observation year minus 2008. (0--5)
   \item xcoord. UTM easting. 
   \item ycoord. UTM northing.  
@@ -30,12 +32,12 @@ data(GRTSsample)
 NPS lake chemistry GRTS sample.
 }
 \references{
-Heard, A.M., L.A. H. Starcevich, J.O. Sickman, M. Goldin Rose, and D.W. Schweizer. 2012. 
-Sierra Nevada Network lake monitoring protocol. Natural Resource Report NPS/SIEN/NRR-2012/551. 
-National Park Service, Fort Collins, Colorado.
-
-Kincaid, T. M. and Olsen, A. R. 2015. spsurvey: Spatial Survey Design and Analysis. R package version 3.1. 
-URL:http://www.epa.gov/nheerl/arm/.
+Heard, A.M., L.A. H. Starcevich, J.O. Sickman, M. Goldin Rose,
+  and D.W. Schweizer. 2012. Sierra Nevada Network lake monitoring protocol.
+  Natural Resource Report NPS/SIEN/NRR-2012/551. National Park Service, Fort
+  Collins, Colorado.
+  
+  Kincaid, T. M. and Olsen, A. R. 2015. spsurvey: Spatial Survey Design and
+  Analysis. R package version 3.1. \url{http://www.epa.gov/nheerl/arm/}.
 }
 \keyword{datasets}
-

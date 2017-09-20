@@ -194,6 +194,7 @@ For long-term monitoring, \code{TrendNPS_Cont} assumes single annual sampling
   
   }
 }
+
 \examples{
 
 #  ---- Read example data set.
@@ -280,10 +281,6 @@ PWIGLS_Aonly_ests
 #        -0.07789642 -0.2180231 0.08734037
 
 }
-\author{
-Leigh Ann Starcevich and Jason Mitchell of Western EcoSystems 
-  Technology, Inc.
-}
 \references{
 Asparouhov, T. (2006).  General multi-level modeling with 
   sampling weights. Communications in Statistics - Theory and Methods 35: 
@@ -319,4 +316,7 @@ Asparouhov, T. (2006).  General multi-level modeling with
 \seealso{
 \code{lme4}, \code{lmerTest}, \code{spsurvey}
 }
-
+\author{
+Leigh Ann Starcevich and Jason Mitchell of Western EcoSystems 
+  Technology, Inc.
+}

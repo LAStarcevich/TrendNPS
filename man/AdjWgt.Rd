@@ -57,6 +57,7 @@ Adjusts the original sampling design weights for frame and
   
   }
 }
+
 \examples{
 \dontrun{
 #  ---- Read example data set.
@@ -67,9 +68,6 @@ Adjusts the original sampling design weights for frame and
 }
 
 
-}
-\author{
-Leigh Ann Starcevich of Western EcoSystems Technology, Inc.
 }
 \references{
 Starcevich, L. A., G. DiDonato, T. McDonald, and J. Mitchell.
@@ -83,4 +81,6 @@ Starcevich, L. A., G. DiDonato, T. McDonald, and J. Mitchell.
   Resource Report NPS/xxxx/NRR-2017/xxxx. National Park Service, Fort
   Collins, Colorado.
 }
-
+\author{
+Leigh Ann Starcevich of Western EcoSystems Technology, Inc.
+}

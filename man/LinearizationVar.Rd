@@ -37,9 +37,6 @@ TrendVar = LinearizationVar(Site,wij,xij,eij,varYij)
 
 
 }
-\author{
-Leigh Ann Starcevich of Western EcoSystems Technology, Inc.
-}
 \references{
 Skinner, C. J., D. Holt, and T. M. F. Smith. 1989. Analysis of Complex Surveys. 
 New York: Wiley.
@@ -47,4 +44,6 @@ New York: Wiley.
 \seealso{
 \code{TrendNPS_Cont}, \code{LinearizationVar_StRS}
 }
-
+\author{
+Leigh Ann Starcevich of Western EcoSystems Technology, Inc.
+}

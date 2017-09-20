@@ -12,22 +12,22 @@
 #'   \code{WYear}, \code{Year}, and the continuous outcome of interest \code{Y}.
 #'   See section "Data frame \code{dat}" below.
 #' 
-#' @param type	Scaling type when \code{method="PWIGLS"}. Valid values include 
-#'   \code{"Aonly"}, \code{"A"}, \code{"AI"}, \code{"B"}, \code{"BI"} 
-#'   \code{"C"}. See section "Options for variable \code{type}" below.
-#'   
-#' @param slope	 Logical value indicating inclusion of a random site-level slope
-#'  effect in the variance components structure in addition to the Site- and Year-
-#'  level random intercept terms. Default = TRUE.
-#'   
-#' @param stratum	 Text string identifying an optional two-level stratification 
-#'   factor in \code{dat}.
-#'   
 #' @param stage1wt	Design weights from the original sample draw without 
 #'   accounting for temporal revisit designs.
 #'   
 #' @param stage2wt	Panel inclusion weights for each site each year.
 #'   
+#' @param type	Scaling type when \code{method="PWIGLS"}. Valid values include 
+#'   \code{"Aonly"}, \code{"A"}, \code{"AI"}, \code{"B"}, \code{"BI"} 
+#'   \code{"C"}. See section "Options for variable \code{type}" below.
+#'   
+#' @param stratum	 Text string identifying an optional two-level stratification 
+#'   factor in \code{dat}. Use stratum = NA to indicate no stratification used.
+#'   
+#' @param slope	 Logical value indicating inclusion of a random site-level slope
+#'  effect in the variance components structure in addition to the Site- and Year-
+#'  level random intercept terms. Default = TRUE.
+#'
 #' @return Returns a vector of regression coefficient estimates for the trend model. 
 #'   
 #' @details Calculates the probability-weighted iterative generalized least squares
@@ -55,7 +55,7 @@
 #'   sampling weights. Communications in Statistics - Theory and Methods 35: 
 #'   439-460.
 #'
-#'   Pfeffermann, D., C. J. Skinner, D. J. Holmes, H. Goldstein, and J. Rasbash 
+#'   Pfeffermann, D., C.J. Skinner, D.J. Holmes, H. Goldstein, and J. Rasbash 
 #'   (1998).  Weighting for unequal selection probabilities in multilevel 
 #'   models. Journal of the Royal Statistical Society, Series B 60(1): 23-40.
 #'   
@@ -67,12 +67,8 @@
 #' 	fit<-PWIGLS_ALL(Z=getME(fit_PO,"Z"),dat=dat,stage1wt=stage1wt,stage2wt=stage2wt,type=type,
 #'       stratum=stratum,slope=slope)
 #' }
-#' 
-#' 
 PWIGLS_ALL<-function(Z,dat,stage1wt,stage2wt,type,stratum,slope) {
-
-# Use PWIGLS from Pfeffermann et al 1998 and Asparouhov 2006
-
+  
 SitesTables<-table(dat$Site)
 Sites<-unique(as.character(dat$Site))
 Years<-sort(unique(dat$Year))
@@ -93,7 +89,7 @@ d<-ncol(Z)
 for (j in 1:sitecolindex) {
 	Site.j<-Sites[j]
 	if(slope) rows.j<-which(Z[,colnames(Z) %in% Site.j][,1]==1)
-	if(!slope) rows.j<-which(Z[,colnames(Z) %in% Site.j]==1)
+	if(!slope) rows.j<-which(Z[,colnames(Z) %in% Site.j][,1]==1)
 
 if(type=="Aonly") {
 # Pfeffermann Step A only from Pfeffermann et al. 1998, no scaling 
@@ -142,6 +138,8 @@ Z[rows.j,]<- Z[rows.j,]/sqrt(dat[rows.j,stage1wt]*s2j)	# multiply sqrt design we
 # SSU weight adj
 if(ma>mb) Z[rows.j,(sitecol+1):d]<-Z[rows.j,(sitecol+1):d]/(sqrt(dat[rows.j,stage2wt]*s1j))  # multiply panel wgt for year effects
 if(ma<=mb) Z[rows.j,1:mb]<-Z[rows.j,1:mb]/(sqrt(dat[rows.j,stage2wt]*s1j))  # multiply panel wgt for year effects
+}  # end site loop
+
 
 if(slope) {
 
@@ -158,9 +156,9 @@ if(slope) {
 	}
 
 # Sum across rows to pick up each weight 
-	dat$SiteWt<-rowSums(as.matrix(A))		
-	dat$SlopeWt<-rowSums(as.matrix(T))
-	dat$YearWt<-rowSums(as.matrix(B))
+	dat$SiteWt<-rowSums(A)			
+	dat$SlopeWt<-rowSums(T)
+	dat$YearWt<-rowSums(B)
 
 	if(is.na(stratum)) fit.PWIGLS<-lmer(LogY ~ WYear +(-1+YearWt|Year) +(-1+SiteWt+SlopeWt|Site), data=dat, REML=FALSE)  
 	if(!is.na(stratum)) fit.PWIGLS<-lmer(LogY ~ WYear*Stratum +(-1+YearWt|Year) +(-1+SiteWt+SlopeWt|Site), data=dat, REML=FALSE)  
@@ -180,14 +178,16 @@ if(!slope) {
 	}
 
 # Sum across rows to pick up each weight 
-	dat$SiteWt<-rowSums(as.matrix(A))		
-	dat$YearWt<-rowSums(as.matrix(B))
+	dat$SiteWt<-rowSums(A)			
+	#dat$SlopeWt<-rowSums(T)
+	dat$YearWt<-rowSums(B)
 	if(is.na(stratum)) fit.PWIGLS<-lmer(LogY ~ WYear +(-1+YearWt|Year) +(-1+SiteWt|Site), data=dat, REML=FALSE)  
 	if(!is.na(stratum)) fit.PWIGLS<-lmer(LogY ~ WYear*Stratum +(-1+YearWt|Year) +(-1+SiteWt|Site), data=dat, REML=FALSE)  
 
 }	# End No Random Slope model
 
-}  # end site loop
-
 return(fit.PWIGLS)
 } 
+
+
+

@@ -1,4 +1,3 @@
-PWIGLS_ALL<-function(Z,dat,stage1wt,stage2wt,type,stratum,slope) {
 #' @export
 #' 
 #' @title Probability-weighted iterative generalized least squares (PWIGLS).
@@ -68,9 +67,8 @@ PWIGLS_ALL<-function(Z,dat,stage1wt,stage2wt,type,stratum,slope) {
 #' 	fit<-PWIGLS_ALL(Z=getME(fit_PO,"Z"),dat=dat,stage1wt=stage1wt,stage2wt=stage2wt,type=type,
 #'       stratum=stratum,slope=slope)
 #' }
-#' 
-#' 
-
+PWIGLS_ALL<-function(Z,dat,stage1wt,stage2wt,type,stratum,slope) {
+  
 SitesTables<-table(dat$Site)
 Sites<-unique(as.character(dat$Site))
 Years<-sort(unique(dat$Year))

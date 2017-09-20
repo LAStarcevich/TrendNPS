@@ -125,6 +125,7 @@ if(method %in% c("SLRDB","WLRDB")) {
 	MeanEsts$WYear = WYears
 # calculate trend in logged mean over time
 	if(method=="SLRDB")  fit<-lm(log(Est.Mean) ~ WYear, data=MeanEsts)
+	SE <- NULL  # Jason adds to fool devtools::check wrt "SE" on next line. 
 	if(method=="WLRDB")  fit<-lm(log(Est.Mean) ~ WYear, weights=1/(SE^2), data=MeanEsts)
 
   	mu <- coef(fit)[1]				# mu

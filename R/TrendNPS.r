@@ -126,7 +126,7 @@ NULL
 #' Seastar count data.
 #'   
 #' @name Seastar
-#' @doctype data
+#' @docType data
 #' @usage data(Seastar)
 #' @format A data frame with 65 rows and 8 variables.
 #' 
@@ -158,7 +158,7 @@ NULL
 #' \emph{Acrosiphonia} binary cover data.
 #' 
 #' @name Cover_Acro
-#' @doctype data
+#' @docType data
 #' @usage data(Cover_Acro)
 #' @format A data frame with 1794 rows and 10 variables.
 #' 

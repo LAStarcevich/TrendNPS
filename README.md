@@ -1,3 +1,3 @@
-# pDog
+# NPSTrend
 
-A suite of programs to manage the digitizing of black-tailed prairie dog habitat.  Developed by WEST, Inc., Summer 2016.
+An R package for the National Park Service to enable trend analysis of survey designs.

@@ -339,12 +339,27 @@ if(!is.na(stratum)) dat$Stratum <- dat[,stratum]
 ############################################################################################
 if(method %in% c("PO","PWIGLS")) {	
 	if(is.na(stratum)) {
-		if(slope) fit<-glmer(Y ~ WYear + (1|Year) +(1+WYear|Site), family=binomial(link=logit), data=dat, control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e6))) 
-		if(!slope) fit<-glmer(Y ~ WYear + (1|Year) +(1|Site), family=binomial(link=logit), data=dat, control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e6))) 
+		if(slope) fit<-glmer(Y ~ WYear + (1|Year) +(1+WYear|Site), 
+		                     family=binomial(link=logit), 
+		                     data=dat, 
+		                     control=glmerControl(optimizer="bobyqa",
+		                                          optCtrl=list(maxfun=2e6))) 
+		if(!slope) fit<-glmer(Y ~ WYear + (1|Year) +(1|Site), 
+		                      family=binomial(link=logit), 
+		                      data=dat, control=glmerControl(optimizer="bobyqa",
+		                                                     optCtrl=list(maxfun=2e6))) 
 	}
 	if(!is.na(stratum)) {
-		if(slope) fit<-glmer(Y ~ WYear * Stratum + (1|Year) +(1+WYear|Site),family=binomial(link=logit), data=dat, control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e6)))
-		if(!slope) fit<-glmer(Y ~ WYear * Stratum + (1|Year) +(1|Site),family=binomial(link=logit), data=dat, control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e6)))
+		if(slope) fit<-glmer(Y ~ WYear * Stratum + (1|Year) +(1+WYear|Site),
+		                     family=binomial(link=logit), 
+		                     data=dat, 
+		                     control=glmerControl(optimizer="bobyqa",
+		                                          optCtrl=list(maxfun=2e6)))
+		if(!slope) fit<-glmer(Y ~ WYear * Stratum + (1|Year) +(1|Site),
+		                      family=binomial(link=logit), 
+		                      data=dat, 
+		                      control=glmerControl(optimizer="bobyqa",
+		                                           optCtrl=list(maxfun=2e6)))
 	}
 
 if(method=="PWIGLS") {

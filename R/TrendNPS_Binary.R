@@ -282,7 +282,7 @@
 #' # Plot trend on log-odds scale
 #' num <- TrendAcro_SLRDB_StRS$DBests$Est.Mean
 #' denom <- 1-TrendAcro_SLRDB_StRS$DBests$Est.Mean#' 
-#' #' TrendAcro_SLRDB_StRS$DBests$LogOdds = num / denom
+#' TrendAcro_SLRDB_StRS$DBests$LogOdds = num / denom
 #' plot(TrendAcro_SLRDB_StRS$DBests$Year,
 #'      TrendAcro_SLRDB_StRS$DBests$LogOdds,
 #'      xlab="Year", ylab="Odd ratio of cover proportion")

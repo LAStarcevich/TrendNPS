@@ -265,7 +265,7 @@ lines(2008:2015, exp(-0.9909923 + 0.211127*(0:7)), col=2)
 plot(TrendAcro_SLRDB_StRS$DBests$Year,
      TrendAcro_SLRDB_StRS$DBests$Est.Mean, 
      xlab="Year", ylab="Cover proportion")
-lines(2008:2015, expit(-0.9909923 + 0.211127*(0:7)), col=2)
+lines(2008:2015, exp(-0.9909923 + 0.211127*(0:7)), col=2)
 }
 \references{
 Asparouhov, T. (2006).  General multi-level modeling with 

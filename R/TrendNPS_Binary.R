@@ -290,9 +290,7 @@
 #' plot(TrendAcro_SLRDB_StRS$DBests$Year,
 #'      TrendAcro_SLRDB_StRS$DBests$Est.Mean, 
 #'      xlab="Year", ylab="Cover proportion")
-#' lines(2008:2015, expit(-0.9909923 + 0.211127*(0:7)), col=2)
-
-
+#' lines(2008:2015, exp(-0.9909923 + 0.211127*(0:7)), col=2)
 TrendNPS_Binary<-function(alpha,dat,method,slope=TRUE,type=NA,stratum=NA,Y,lat=NA,long=NA,stage1wt=NA,stage2wt=NA,str1prop=NA,nbhd=TRUE) {
 
 # dat = data set for trend analysis

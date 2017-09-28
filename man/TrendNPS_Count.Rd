@@ -252,11 +252,10 @@ lat="Lat",long="Long", stage1wt="wgt",stage2wt="PanelWt",str1prop=0.13227)
 #   2015 11.99475 2.917410     6 -0.39376154
 
 # Plot trend on original scale
-plot(TrendSeastar_SLRDB_StRS$DBests$Year,TrendSeastar_SLRDB_StRS$DBests$Est.Mean, xlab="Year", ylab="Mean Sea Star Counts")
+plot(TrendSeastar_SLRDB_StRS$DBests$Year,
+     TrendSeastar_SLRDB_StRS$DBests$Est.Mean, 
+     xlab="Year", ylab="Mean Sea Star Counts")
 lines(2009:2015, exp(2.687804 + 0.0317377*(0:6)), col=2)
-
-
-
 }
 \references{
 Asparouhov, T. (2006).  General multi-level modeling with 

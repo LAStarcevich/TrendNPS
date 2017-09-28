@@ -194,7 +194,7 @@ For long-term monitoring, \code{TrendNPS_Binary} assumes a single annual samplin
 \examples{
 
 #  ---- Read example data set.
-data(Acro_Cover)
+data(Cover_Acro)
 
 #  ---- Load dependent packages. 
 pkgList <- c("lme4","lmerTest","spsurvey")
@@ -256,7 +256,8 @@ str1prop=0.13227)
 
 # Plot trend on log-odds scale
 num <- TrendAcro_SLRDB_StRS$DBests$Est.Mean
-denom <- 1-TrendAcro_SLRDB_StRS$DBests$Est.Mean#' #' TrendAcro_SLRDB_StRS$DBests$LogOdds = num / denom
+denom <- 1-TrendAcro_SLRDB_StRS$DBests$Est.Mean#' 
+#' TrendAcro_SLRDB_StRS$DBests$LogOdds = num / denom
 plot(TrendAcro_SLRDB_StRS$DBests$Year,
      TrendAcro_SLRDB_StRS$DBests$LogOdds,
      xlab="Year", ylab="Odd ratio of cover proportion")
@@ -303,7 +304,7 @@ Asparouhov, T. (2006).  General multi-level modeling with
   (2017). Trend Estimation for Complex Survey Designs. Natural Resource 
   Report NPS/xxxx/NRR-2017/xxxx. National Park Service, Fort Collins, 
   Colorado.
-  R. Wolfinger. (1993). Laplace’s approximation for nonlinear mixed models. 
+  R. Wolfinger. (1993). Laplace's approximation for nonlinear mixed models. 
   Biometrika 80(4): 791-795.
 }
 \seealso{

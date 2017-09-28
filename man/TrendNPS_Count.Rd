@@ -206,24 +206,23 @@ lapply(pkgList, library, character.only = TRUE)
 ###########################
 # Example 1: Trend analysis of annual site-level counts of leather sea stars
 # with the PO approach: stratification and full random effects model.
-TrendSeaster_PO_StRS = TrendNPS_Count(alpha=0.1,
+TrendSeastar_PO_StRS = TrendNPS_Count(alpha=0.1,
 dat=Seastar,method="PO",slope=TRUE,type=NA,stratum="Park",Y="Count",
 stage1wt="wgt",stage2wt="PanelWt",str1prop=0.13227) 
 
-TrendSeaster_PO_StRS
+TrendSeastar_PO_StRS
 
 # $ModelEstimates
-# mu trend SEtrend sig2a sig2t sigat sig2b
-# -0.2992415 0.221928 0.09341594 0.2867116 0.01394005 -0.04732509 0.2411157
+#         mu      trend    SEtrend     sig2a       sig2t        sigat      sig2b
+# 1 1.470861 0.04604501 0.04518648 0.2485275 0.001259157 -0.007764208 0.03724508
 
 # $TrendTest
-# trend SEtrend z-stat pvalue
-# 0.221928 0.09341594 2.375698 0.0175158
+#        trend    SEtrend z-stat    pvalue
+# 1 0.04604501 0.04518648  1.019 0.3082031
 
-# $TrendCIofOddsRatio
-# Annual Pct Change CI low CI high
-# 0.2484815 0.07065702 0.4558408
-
+# $TrendCI
+#   Annual Pct Change    CI low   CI high
+# 1        0.04712154 -0.027884 0.1279143 
 
 # Example 2: Trend analysis of annual site-level counts of leather sea stars
 # with the SLRDB approach for stratification.
@@ -231,7 +230,7 @@ TrendSeastar_SLRDB_StRS = TrendNPS_Count(alpha=0.1,
 dat=Seastar,method="SLRDB",slope=TRUE,type=NA,stratum="Park",Y="Count",
 lat="Lat",long="Long", stage1wt="wgt",stage2wt="PanelWt",str1prop=0.13227) 
 
-# TrendSeastar_SLRDB_StRS
+TrendSeastar_SLRDB_StRS
 # $ModelEstimates
 #        mu     trend    SEtrend sig2a sig2t sigat sig2b
 #  2.687804 0.0317377 0.04920822     0     0     0     0

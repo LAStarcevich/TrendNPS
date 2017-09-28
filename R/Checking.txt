@@ -1,0 +1,37 @@
+
+
+
+#   ---- Add in new datasets.  
+load("C:/Users/jmitchell/Downloads/TrendNPS_BinaryCount_DataFrames.RData")
+
+devtools::use_data(Cover_Acro)
+
+devtools::use_data(Seastar)
+
+devtools::document()
+
+devtools::check(manual=TRUE)
+
+
+#   ---- Jason testing after package compilation.  
+
+#   ---- Check lazy loading of R dataframes. 
+data(Cover_Acro)
+data(Seastar)
+data(GRTSsample)
+data(LakeData_orig)
+data(LakeDataRep)
+
+rm(c("Cover_Acro","Seastar","GRTSsample","LakeData_orig","LakeDataRep"))
+
+
+#   ---- Check for csv loading.  Use function system.file to speed up the problem of 
+#   ---- finding the user's local installation of the TrendNPS R package.  These 
+#   ---- files are stored in the "extdata" folder of the compiled package.  
+system.file("extdata","Cover_Acro.csv",package="TrendNPS")
+system.file("extdata","Seastar.csv",package="TrendNPS")
+system.file("extdata","GRTSsample.csv",package="TrendNPS")
+system.file("extdata","LakeData_orig.csv",package="TrendNPS")
+system.file("extdata","LakeDataRep.csv",package="TrendNPS")
+
+rm(c("Cover_Acro","Seastar","GRTSsample","LakeData_orig","LakeDataRep"))

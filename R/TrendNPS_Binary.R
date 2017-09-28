@@ -417,6 +417,10 @@ if(method %in% c("SLRDB","WLRDB")) {
 	MeanEsts$WYear = WYears
 
 # calculate trend in logged mean over time
+	logit <- function(x){
+	  y <- log(x / (1 - x))
+	  return(y)
+	}
 	if(method=="SLRDB")  fit<-lm(logit(Est.Mean) ~ WYear, data=MeanEsts)
 	if(method=="WLRDB")  fit<-lm(logit(Est.Mean) ~ WYear, weights=1/(MeanEsts$SE^2), data=MeanEsts)
 

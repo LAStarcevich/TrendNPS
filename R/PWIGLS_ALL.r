@@ -1,3 +1,4 @@
+PWIGLS_ALL<-function(Z,dat,stage1wt,stage2wt,type,stratum,slope) {
 #' @export
 #' 
 #' @title Probability-weighted iterative generalized least squares (PWIGLS).
@@ -67,8 +68,9 @@
 #' 	fit<-PWIGLS_ALL(Z=getME(fit_PO,"Z"),dat=dat,stage1wt=stage1wt,stage2wt=stage2wt,type=type,
 #'       stratum=stratum,slope=slope)
 #' }
-PWIGLS_ALL<-function(Z,dat,stage1wt,stage2wt,type,stratum,slope) {
-  
+#' 
+#' 
+
 SitesTables<-table(dat$Site)
 Sites<-unique(as.character(dat$Site))
 Years<-sort(unique(dat$Year))
@@ -156,9 +158,9 @@ if(slope) {
 	}
 
 # Sum across rows to pick up each weight 
-	dat$SiteWt<-rowSums(A)			
-	dat$SlopeWt<-rowSums(T)
-	dat$YearWt<-rowSums(B)
+	dat$SiteWt<-rowSums(as.matrix(A))			
+	dat$SlopeWt<-rowSums(as.matrix(T))
+	dat$YearWt<-rowSums(as.matrix(B))
 
 	if(is.na(stratum)) fit.PWIGLS<-lmer(LogY ~ WYear +(-1+YearWt|Year) +(-1+SiteWt+SlopeWt|Site), data=dat, REML=FALSE)  
 	if(!is.na(stratum)) fit.PWIGLS<-lmer(LogY ~ WYear*Stratum +(-1+YearWt|Year) +(-1+SiteWt+SlopeWt|Site), data=dat, REML=FALSE)  
@@ -178,9 +180,9 @@ if(!slope) {
 	}
 
 # Sum across rows to pick up each weight 
-	dat$SiteWt<-rowSums(A)			
+	dat$SiteWt<-rowSums(as.matrix(A))			
 	#dat$SlopeWt<-rowSums(T)
-	dat$YearWt<-rowSums(B)
+	dat$YearWt<-rowSums(as.matrix(B))
 	if(is.na(stratum)) fit.PWIGLS<-lmer(LogY ~ WYear +(-1+YearWt|Year) +(-1+SiteWt|Site), data=dat, REML=FALSE)  
 	if(!is.na(stratum)) fit.PWIGLS<-lmer(LogY ~ WYear*Stratum +(-1+YearWt|Year) +(-1+SiteWt|Site), data=dat, REML=FALSE)  
 

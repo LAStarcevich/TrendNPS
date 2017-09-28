@@ -211,7 +211,7 @@
 #'   Report NPS/xxxx/NRR-2017/xxxx. National Park Service, Fort Collins, 
 #'   Colorado.
 
-#'   R. Wolfinger. (1993). Laplace's approximation for nonlinear mixed models. 
+#'   R. Wolfinger. (1993). Laplace’s approximation for nonlinear mixed models. 
 #'   Biometrika 80(4): 791-795. 
 #'   
 #' @seealso \code{lme4}, \code{lmerTest}, \code{spsurvey}
@@ -233,7 +233,7 @@
 #' TrendAcro_PO_StRS = TrendNPS_Binary(alpha=0.1,
 #' dat=Cover_Acro,method="PO",slope=TRUE,type=NA,stratum="Park",Y="Y",
 #' stage1wt="wgt",stage2wt="PanelWt",str1prop=0.13227) 
-#' TrendAcro_PO_StRS
+
 #' # $ModelEstimates
 #' #           mu    trend    SEtrend     sig2a      sig2t       sigat     sig2b
 #' #   -0.2992415 0.221928 0.09341594 0.2867116 0.01394005 -0.04732509 0.2411157
@@ -253,7 +253,9 @@
 #' dat=Cover_Acro,method="SLRDB",slope=TRUE,type=NA,stratum="Park",Y="Y",
 #' lat="Lat",long="Long",stage1wt="wgt",stage2wt="PanelWt",
 #' str1prop=0.13227) 
+#' 
 #' TrendAcro_SLRDB_StRS
+#' 
 #' # $ModelEstimates
 #' #           mu    trend    SEtrend sig2a sig2t sigat sig2b
 #' #   -0.9909923 0.211127 0.08966504     0     0     0     0
@@ -278,23 +280,15 @@
 #' #   2015 0.4794624 0.04936033     7 -0.5690937
 #' 
 #' # Plot trend on log-odds scale
-#' num <- TrendAcro_SLRDB_StRS$DBests$Est.Mean
-#' denom <- 1-TrendAcro_SLRDB_StRS$DBests$Est.Mean
-#' 
-#' TrendAcro_SLRDB_StRS$DBests$LogOdds = num / denom
-#' plot(TrendAcro_SLRDB_StRS$DBests$Year,
-#'      TrendAcro_SLRDB_StRS$DBests$LogOdds,
-#'      xlab="Year", ylab="Odd ratio of cover proportion")
+#' TrendAcro_SLRDB_StRS$DBests$LogOdds = TrendAcro_SLRDB_StRS$DBests$Est.Mean/(1-TrendAcro_SLRDB_StRS$DBests$Est.Mean)
+#' plot(TrendAcro_SLRDB_StRS$DBests$Year,TrendAcro_SLRDB_StRS$DBests$LogOdds, xlab="Year", ylab="Odd ratio of cover proportion")
 #' lines(2008:2015, exp(-0.9909923 + 0.211127*(0:7)), col=2)
+#' 
 #' # Plot trend on proportional cover scale
-#' expit <- function(x){
-#'   y <- 1 / (1 + exp(-x))
-#'   return(y)
-#' }
-#' plot(TrendAcro_SLRDB_StRS$DBests$Year,
-#'      TrendAcro_SLRDB_StRS$DBests$Est.Mean,
-#'      xlab="Year", ylab="Cover proportion")
+#' plot(TrendAcro_SLRDB_StRS$DBests$Year,TrendAcro_SLRDB_StRS$DBests$Est.Mean, xlab="Year", ylab="Cover proportion")
 #' lines(2008:2015, expit(-0.9909923 + 0.211127*(0:7)), col=2)
+
+
 TrendNPS_Binary<-function(alpha,dat,method,slope=TRUE,type=NA,stratum=NA,Y,lat=NA,long=NA,stage1wt=NA,stage2wt=NA,str1prop=NA,nbhd=TRUE) {
 
 # dat = data set for trend analysis
@@ -347,27 +341,12 @@ if(!is.na(stratum)) dat$Stratum <- dat[,stratum]
 ############################################################################################
 if(method %in% c("PO","PWIGLS")) {	
 	if(is.na(stratum)) {
-		if(slope) fit<-glmer(Y ~ WYear + (1|Year) +(1+WYear|Site), 
-		                     family=binomial(link=logit), 
-		                     data=dat, 
-		                     control=glmerControl(optimizer="bobyqa",
-		                                          optCtrl=list(maxfun=2e6))) 
-		if(!slope) fit<-glmer(Y ~ WYear + (1|Year) +(1|Site), 
-		                      family=binomial(link=logit), 
-		                      data=dat, control=glmerControl(optimizer="bobyqa",
-		                                                     optCtrl=list(maxfun=2e6))) 
+		if(slope) fit<-glmer(Y ~ WYear + (1|Year) +(1+WYear|Site), family=binomial(link=logit), data=dat, control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e6))) 
+		if(!slope) fit<-glmer(Y ~ WYear + (1|Year) +(1|Site), family=binomial(link=logit), data=dat, control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e6))) 
 	}
 	if(!is.na(stratum)) {
-		if(slope) fit<-glmer(Y ~ WYear * Stratum + (1|Year) +(1+WYear|Site),
-		                     family=binomial(link=logit), 
-		                     data=dat, 
-		                     control=glmerControl(optimizer="bobyqa",
-		                                          optCtrl=list(maxfun=2e6)))
-		if(!slope) fit<-glmer(Y ~ WYear * Stratum + (1|Year) +(1|Site),
-		                      family=binomial(link=logit), 
-		                      data=dat, 
-		                      control=glmerControl(optimizer="bobyqa",
-		                                           optCtrl=list(maxfun=2e6)))
+		if(slope) fit<-glmer(Y ~ WYear * Stratum + (1|Year) +(1+WYear|Site),family=binomial(link=logit), data=dat, control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e6)))
+		if(!slope) fit<-glmer(Y ~ WYear * Stratum + (1|Year) +(1|Site),family=binomial(link=logit), data=dat, control=glmerControl(optimizer="bobyqa",optCtrl=list(maxfun=2e6)))
 	}
 
 if(method=="PWIGLS") {
@@ -440,10 +419,6 @@ if(method %in% c("SLRDB","WLRDB")) {
 	MeanEsts$WYear = WYears
 
 # calculate trend in logged mean over time
-	logit <- function(x){
-	  y <- log(x / (1 - x))
-	  return(y)
-	}
 	if(method=="SLRDB")  fit<-lm(logit(Est.Mean) ~ WYear, data=MeanEsts)
 	if(method=="WLRDB")  fit<-lm(logit(Est.Mean) ~ WYear, weights=1/(MeanEsts$SE^2), data=MeanEsts)
 

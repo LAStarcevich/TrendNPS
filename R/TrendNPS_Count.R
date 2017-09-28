@@ -237,9 +237,9 @@
 #' # Example 1: Trend analysis of annual site-level counts of leather sea stars
 #' # with the PO approach: stratification and full random effects model.
 #' TrendSeaster_PO_StRS = TrendNPS_Count(alpha=0.1,
-#' dat=Seastar,method="PO",slope=TRUE,type=NA,stratum="Park",Y="Y",
+#' dat=Seastar,method="PO",slope=TRUE,type=NA,stratum="Park",Y="Count",
 #' stage1wt="wgt",stage2wt="PanelWt",str1prop=0.13227) 
-
+#'
 #' # $ModelEstimates
 #' #           mu    trend    SEtrend     sig2a      sig2t       sigat     sig2b
 #' #   -0.2992415 0.221928 0.09341594 0.2867116 0.01394005 -0.04732509 0.2411157

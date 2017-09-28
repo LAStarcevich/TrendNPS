@@ -283,11 +283,10 @@
 #' #   2015 11.99475 2.917410     6 -0.39376154
 #' 
 #' # Plot trend on original scale
-#' plot(TrendSeastar_SLRDB_StRS$DBests$Year,TrendSeastar_SLRDB_StRS$DBests$Est.Mean, xlab="Year", ylab="Mean Sea Star Counts")
+#' plot(TrendSeastar_SLRDB_StRS$DBests$Year,
+#'      TrendSeastar_SLRDB_StRS$DBests$Est.Mean, 
+#'      xlab="Year", ylab="Mean Sea Star Counts")
 #' lines(2009:2015, exp(2.687804 + 0.0317377*(0:6)), col=2)
-#' 
-#' 
-#' 
 TrendNPS_Count<-function(alpha,dat,method,slope=TRUE,type=NA,stratum=NA,Y,lat=NA,long=NA,stage1wt=NA,stage2wt=NA,str1prop=NA,nbhd=TRUE) {
 
 # Calculate sample sizes

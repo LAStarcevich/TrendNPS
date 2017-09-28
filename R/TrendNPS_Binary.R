@@ -278,12 +278,18 @@
 #' #   2015 0.4794624 0.04936033     7 -0.5690937
 #' 
 #' # Plot trend on log-odds scale
-#' TrendAcro_SLRDB_StRS$DBests$LogOdds = TrendAcro_SLRDB_StRS$DBests$Est.Mean/(1-TrendAcro_SLRDB_StRS$DBests$Est.Mean)
-#' plot(TrendAcro_SLRDB_StRS$DBests$Year,TrendAcro_SLRDB_StRS$DBests$LogOdds, xlab="Year", ylab="Odd ratio of cover proportion")
+#' num <- TrendAcro_SLRDB_StRS$DBests$Est.Mean
+#' denom <- 1-TrendAcro_SLRDB_StRS$DBests$Est.Mean
+#' TrendAcro_SLRDB_StRS$DBests$LogOdds = num / denom
+#' plot(TrendAcro_SLRDB_StRS$DBests$Year,
+#'      TrendAcro_SLRDB_StRS$DBests$LogOdds, 
+#'      xlab="Year", ylab="Odd ratio of cover proportion")
 #' lines(2008:2015, exp(-0.9909923 + 0.211127*(0:7)), col=2)
 #' 
 #' # Plot trend on proportional cover scale
-#' plot(TrendAcro_SLRDB_StRS$DBests$Year,TrendAcro_SLRDB_StRS$DBests$Est.Mean, xlab="Year", ylab="Cover proportion")
+#' plot(TrendAcro_SLRDB_StRS$DBests$Year,
+#'      TrendAcro_SLRDB_StRS$DBests$Est.Mean, 
+#'      xlab="Year", ylab="Cover proportion")
 #' lines(2008:2015, expit(-0.9909923 + 0.211127*(0:7)), col=2)
 
 

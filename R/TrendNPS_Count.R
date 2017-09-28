@@ -243,17 +243,16 @@
 #' TrendSeaster_PO_StRS
 #'
 #' # $ModelEstimates
-#' # mu trend SEtrend sig2a sig2t sigat sig2b
-#' # -0.2992415 0.221928 0.09341594 0.2867116 0.01394005 -0.04732509 0.2411157
-#'
+#' #         mu      trend    SEtrend     sig2a       sig2t        sigat      sig2b
+#' # 1 1.470861 0.04604501 0.04518648 0.2485275 0.001259157 -0.007764208 0.03724508
+#' 
 #' # $TrendTest
-#' # trend SEtrend z-stat pvalue
-#' # 0.221928 0.09341594 2.375698 0.0175158
+#' #        trend    SEtrend z-stat    pvalue
+#' # 1 0.04604501 0.04518648  1.019 0.3082031
 #' 
-#' # $TrendCIofOddsRatio
-#' # Annual Pct Change CI low CI high
-#' # 0.2484815 0.07065702 0.4558408
-#' 
+#' # $TrendCI
+#' #   Annual Pct Change    CI low   CI high
+#' # 1        0.04712154 -0.027884 0.1279143 
 #' 
 #' # Example 2: Trend analysis of annual site-level counts of leather sea stars
 #' # with the SLRDB approach for stratification.

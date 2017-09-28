@@ -211,7 +211,7 @@
 #'   Report NPS/xxxx/NRR-2017/xxxx. National Park Service, Fort Collins, 
 #'   Colorado.
 
-#'   R. Wolfinger. (1993). Laplace’s approximation for nonlinear mixed models. 
+#'   R. Wolfinger. (1993). Laplace's approximation for nonlinear mixed models. 
 #'   Biometrika 80(4): 791-795. 
 #'   
 #' @seealso \code{lme4}, \code{lmerTest}, \code{spsurvey}
@@ -219,7 +219,7 @@
 #' @examples 
 #' 
 #' #  ---- Read example data set.
-#' data(Acro_Cover)
+#' data(Cover_Acro)
 #' 
 #' #  ---- Load dependent packages. 
 #' pkgList <- c("lme4","lmerTest","spsurvey")
@@ -281,7 +281,8 @@
 #' 
 #' # Plot trend on log-odds scale
 #' num <- TrendAcro_SLRDB_StRS$DBests$Est.Mean
-#' denom <- 1-TrendAcro_SLRDB_StRS$DBests$Est.Mean#' #' TrendAcro_SLRDB_StRS$DBests$LogOdds = num / denom
+#' denom <- 1-TrendAcro_SLRDB_StRS$DBests$Est.Mean#' 
+#' #' TrendAcro_SLRDB_StRS$DBests$LogOdds = num / denom
 #' plot(TrendAcro_SLRDB_StRS$DBests$Year,
 #'      TrendAcro_SLRDB_StRS$DBests$LogOdds,
 #'      xlab="Year", ylab="Odd ratio of cover proportion")
@@ -426,6 +427,10 @@ if(method %in% c("SLRDB","WLRDB")) {
 	MeanEsts$WYear = WYears
 
 # calculate trend in logged mean over time
+	logit <- function(x){
+	  y <- log(x / (1 - x))
+	  return(y)
+	}
 	if(method=="SLRDB")  fit<-lm(logit(Est.Mean) ~ WYear, data=MeanEsts)
 	if(method=="WLRDB")  fit<-lm(logit(Est.Mean) ~ WYear, weights=1/(MeanEsts$SE^2), data=MeanEsts)
 

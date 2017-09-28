@@ -208,7 +208,7 @@ lapply(pkgList, library, character.only = TRUE)
 TrendAcro_PO_StRS = TrendNPS_Binary(alpha=0.1,
 dat=Cover_Acro,method="PO",slope=TRUE,type=NA,stratum="Park",Y="Y",
 stage1wt="wgt",stage2wt="PanelWt",str1prop=0.13227) 
-TrendAcro_PO_StRS
+
 # $ModelEstimates
 #           mu    trend    SEtrend     sig2a      sig2t       sigat     sig2b
 #   -0.2992415 0.221928 0.09341594 0.2867116 0.01394005 -0.04732509 0.2411157
@@ -228,7 +228,9 @@ TrendAcro_SLRDB_StRS = TrendNPS_Binary(alpha=0.1,
 dat=Cover_Acro,method="SLRDB",slope=TRUE,type=NA,stratum="Park",Y="Y",
 lat="Lat",long="Long",stage1wt="wgt",stage2wt="PanelWt",
 str1prop=0.13227) 
-TrendAcro_SLRDB_StRS
+
+# TrendAcro_SLRDB_StRS
+
 # $ModelEstimates
 #           mu    trend    SEtrend sig2a sig2t sigat sig2b
 #   -0.9909923 0.211127 0.08966504     0     0     0     0
@@ -254,13 +256,12 @@ TrendAcro_SLRDB_StRS
 
 # Plot trend on log-odds scale
 num <- TrendAcro_SLRDB_StRS$DBests$Est.Mean
-denom <- 1-TrendAcro_SLRDB_StRS$DBests$Est.Mean
-
-TrendAcro_SLRDB_StRS$DBests$LogOdds = num / denom
+denom <- 1-TrendAcro_SLRDB_StRS$DBests$Est.Mean#' #' TrendAcro_SLRDB_StRS$DBests$LogOdds = num / denom
 plot(TrendAcro_SLRDB_StRS$DBests$Year,
      TrendAcro_SLRDB_StRS$DBests$LogOdds,
      xlab="Year", ylab="Odd ratio of cover proportion")
 lines(2008:2015, exp(-0.9909923 + 0.211127*(0:7)), col=2)
+
 # Plot trend on proportional cover scale
 expit <- function(x){
   y <- 1 / (1 + exp(-x))
@@ -302,7 +303,7 @@ Asparouhov, T. (2006).  General multi-level modeling with
   (2017). Trend Estimation for Complex Survey Designs. Natural Resource 
   Report NPS/xxxx/NRR-2017/xxxx. National Park Service, Fort Collins, 
   Colorado.
-  R. Wolfinger. (1993). Laplace's approximation for nonlinear mixed models. 
+  R. Wolfinger. (1993). Laplace’s approximation for nonlinear mixed models. 
   Biometrika 80(4): 791-795.
 }
 \seealso{

@@ -8,11 +8,11 @@ Maintainer: Jason Mitchell <jmitchell@west-inc.com>
 Description: Analyze complex survey designs via trend estimation.
 License: GNU General Public License
 BugReports: http://lar-git.west-inc.com/jasmyace/TrendNPS/issues
+Depends: lme4, R(>= 2.10.0)
 Imports:
     lmerTest,
     spsurvey,
     stats
-Depends: lme4, R(>= 2.10.0)
 NeedsCompilation: no
 Packaged: 2016-10-11 10:37:00 MDT; jmitchell
 LazyData: true

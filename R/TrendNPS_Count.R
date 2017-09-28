@@ -240,17 +240,17 @@
 #' dat=Seastar,method="PO",slope=TRUE,type=NA,stratum="Park",Y="Count",
 #' stage1wt="wgt",stage2wt="PanelWt",str1prop=0.13227) 
 #'
-#' TrendSeastar_PO_StRS
+#' TrendSeaster_PO_StRS
 #'
-#' $ModelEstimates
+#' # $ModelEstimates
 #' # mu trend SEtrend sig2a sig2t sigat sig2b
 #' # -0.2992415 0.221928 0.09341594 0.2867116 0.01394005 -0.04732509 0.2411157
-
-#' $TrendTest
+#'
+#' # $TrendTest
 #' # trend SEtrend z-stat pvalue
 #' # 0.221928 0.09341594 2.375698 0.0175158
 #' 
-#' $TrendCIofOddsRatio
+#' # $TrendCIofOddsRatio
 #' # Annual Pct Change CI low CI high
 #' # 0.2484815 0.07065702 0.4558408
 #' 

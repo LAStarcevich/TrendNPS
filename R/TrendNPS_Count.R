@@ -240,17 +240,19 @@
 #' dat=Seastar,method="PO",slope=TRUE,type=NA,stratum="Park",Y="Count",
 #' stage1wt="wgt",stage2wt="PanelWt",str1prop=0.13227) 
 #'
-#' # $ModelEstimates
-#' #           mu    trend    SEtrend     sig2a      sig2t       sigat     sig2b
-#' #   -0.2992415 0.221928 0.09341594 0.2867116 0.01394005 -0.04732509 0.2411157
+#' TrendSeastar_PO_StRS
+#'
+#' $ModelEstimates
+#' # mu trend SEtrend sig2a sig2t sigat sig2b
+#' # -0.2992415 0.221928 0.09341594 0.2867116 0.01394005 -0.04732509 0.2411157
+
+#' $TrendTest
+#' # trend SEtrend z-stat pvalue
+#' # 0.221928 0.09341594 2.375698 0.0175158
 #' 
-#' # $TrendTest
-#' #      trend    SEtrend   z-stat    pvalue
-#' #   0.221928 0.09341594 2.375698 0.0175158
-#' 
-#' # $TrendCIofOddsRatio
-#' #   Annual Pct Change     CI low   CI high
-#' #           0.2484815 0.07065702 0.4558408
+#' $TrendCIofOddsRatio
+#' # Annual Pct Change CI low CI high
+#' # 0.2484815 0.07065702 0.4558408
 #' 
 #' 
 #' # Example 2: Trend analysis of annual site-level counts of leather sea stars

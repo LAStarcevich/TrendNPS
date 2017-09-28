@@ -216,8 +216,8 @@
 #'   (2017). Trend Estimation for Complex Survey Designs. Natural Resource 
 #'   Report NPS/xxxx/NRR-2017/xxxx. National Park Service, Fort Collins, 
 #'   Colorado.
-
-#'   R. Wolfinger. (1993). Laplace’s approximation for nonlinear mixed models. 
+#'
+#'   R. Wolfinger. (1993). Laplace's approximation for nonlinear mixed models. 
 #'   Biometrika 80(4): 791-795. 
 #'   
 #' @seealso \code{lme4}, \code{lmerTest}, \code{spsurvey}

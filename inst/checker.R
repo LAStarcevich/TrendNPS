@@ -111,21 +111,18 @@ TrendAcro_SLRDB_StRS = TrendNPS_Binary(alpha=0.1,
 # Plot trend on log-odds scale
 
 num <- TrendAcro_SLRDB_StRS$DBests$Est.Mean
-denom <- 1-TrendAcro_SLRDB_StRS$DBests$Est.Mean#'
+denom <- 1-TrendAcro_SLRDB_StRS$DBests$Est.Mean 
 TrendAcro_SLRDB_StRS$DBests$LogOdds = num / denom
 plot(TrendAcro_SLRDB_StRS$DBests$Year,
      TrendAcro_SLRDB_StRS$DBests$LogOdds,
-     xlab="Year", ylab="Odd ratio of cover proportion")
+     xlab="Year", ylab="Odds ratio of cover proportion")
 lines(2008:2015, exp(-0.9909923 + 0.211127*(0:7)), col=2)
+
 # Plot trend on proportional cover scale
-expit <- function(x){
-  y <- 1 / (1 + exp(-x))
-  return(y)
-}
 plot(TrendAcro_SLRDB_StRS$DBests$Year,
-     TrendAcro_SLRDB_StRS$DBests$Est.Mean,
+     TrendAcro_SLRDB_StRS$DBests$Est.Mean, 
      xlab="Year", ylab="Cover proportion")
-lines(2008:2015, expit(-0.9909923 + 0.211127*(0:7)), col=2)
+lines(2008:2015, TrendNPS::expit(-0.9909923 + 0.211127*(0:7)), col=2)
 
 
 

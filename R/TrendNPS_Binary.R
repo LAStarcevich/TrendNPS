@@ -207,7 +207,7 @@
 #'   Report NPS/xxxx/NRR-2017/xxxx. National Park Service, Fort Collins, 
 #'   Colorado.
 #'   
-#'   R. Wolfinger. (1993). Laplace’s approximation for nonlinear mixed models. 
+#'   R. Wolfinger. (1993). Laplace's approximation for nonlinear mixed models. 
 #'   Biometrika 80(4): 791-795. 
 #'   
 #' @seealso \code{lme4}, \code{lmerTest}, \code{spsurvey}
@@ -275,7 +275,7 @@
 #' 
 #' num <- TrendAcro_SLRDB_StRS$DBests$Est.Mean
 #' denom <- 1-TrendAcro_SLRDB_StRS$DBests$Est.Mean 
-#' RrendAcro_SLRDB_StRS$DBests$LogOdds = num / denom
+#' TrendAcro_SLRDB_StRS$DBests$LogOdds = num / denom
 #' plot(TrendAcro_SLRDB_StRS$DBests$Year,
 #'      TrendAcro_SLRDB_StRS$DBests$LogOdds,
 #'      xlab="Year", ylab="Odds ratio of cover proportion")

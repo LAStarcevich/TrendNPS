@@ -213,7 +213,7 @@
 #'   Report NPS/xxxx/NRR-2017/xxxx. National Park Service, Fort Collins, 
 #'   Colorado.
 
-#'   R. Wolfinger. (1993). Laplace’s approximation for nonlinear mixed models. 
+#'   R. Wolfinger. (1993). Laplace's approximation for nonlinear mixed models. 
 #'   Biometrika 80(4): 791-795. 
 #'   
 #' @seealso \code{lme4}, \code{lmerTest}, \code{spsurvey}
@@ -233,7 +233,7 @@
 #' # Example 1: Trend analysis of annual site-level counts of leather sea stars
 #' # with the PO approach: stratification and full random effects model.
 #' TrendSeaster_PO_StRS = TrendNPS_Count(alpha=0.1,
-#' dat=Seastar,method="PO",slope=TRUE,type=NA,stratum="Park",Y="Y",
+#' dat=Seastar,method="PO",slope=TRUE,type=NA,stratum="Park",Y="Count",
 #' stage1wt="wgt",stage2wt="PanelWt",str1prop=0.13227) 
 
 #' # $ModelEstimates
@@ -279,7 +279,9 @@
 #' #   2015 11.99475 2.917410     6 -0.39376154
 #' 
 #' # Plot trend on original scale
-#' plot(TrendSeastar_SLRDB_StRS$DBests$Year,TrendSeastar_SLRDB_StRS$DBests$Est.Mean, xlab="Year", ylab="Mean Sea Star Counts")
+#' plot(TrendSeastar_SLRDB_StRS$DBests$Year,
+#'      TrendSeastar_SLRDB_StRS$DBests$Est.Mean,
+#'      xlab="Year", ylab="Mean Sea Star Counts")
 #' lines(2009:2015, exp(2.687804 + 0.0317377*(0:6)), col=2)
 #' 
 #' 

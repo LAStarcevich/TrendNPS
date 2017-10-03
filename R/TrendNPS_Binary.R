@@ -206,7 +206,7 @@
 #'   (2017). Trend Estimation for Complex Survey Designs. Natural Resource 
 #'   Report NPS/xxxx/NRR-2017/xxxx. National Park Service, Fort Collins, 
 #'   Colorado.
-
+#'   
 #'   R. Wolfinger. (1993). Laplace’s approximation for nonlinear mixed models. 
 #'   Biometrika 80(4): 791-795. 
 #'   
@@ -229,7 +229,7 @@
 #' TrendAcro_PO_StRS = TrendNPS_Binary(alpha=0.1,
 #' dat=Cover_Acro,method="PO",slope=TRUE,type=NA,stratum="Park",Y="Y",
 #' stage1wt="wgt",stage2wt="PanelWt",str1prop=0.13227) 
-
+#' 
 #' # $ModelEstimates
 #' #           mu    trend    SEtrend     sig2a      sig2t       sigat     sig2b
 #' #   -0.2992415 0.221928 0.09341594 0.2867116 0.01394005 -0.04732509 0.2411157
@@ -285,9 +285,7 @@
 #' plot(TrendAcro_SLRDB_StRS$DBests$Year,
 #' 		TrendAcro_SLRDB_StRS$DBests$Est.Mean, 
 #' 		xlab="Year", ylab="Cover proportion")
-#' lines(2008:2015, expit(-0.9909923 + 0.211127*(0:7)), col=2)
-
-
+#' lines(2008:2015, TrendNPS::expit(-0.9909923 + 0.211127*(0:7)), col=2)
 TrendNPS_Binary<-function(alpha,dat,method,slope=TRUE,type=NA,stratum=NA,Y,lat=NA,long=NA,stage1wt=NA,stage2wt=NA,str1prop=NA,nbhd=TRUE) {
 
 # dat = data set for trend analysis

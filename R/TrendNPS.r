@@ -1,15 +1,17 @@
 #' TrendNPS: An R package for trend analysis for data from complex survey
 #' designs.
 #'
-#' @section Description: The TrendNPS package provides trend analysis tools for
-#'   complex survey designs. Please refer to the accompanying National Park
-#'   Service Natural Resource Report (NRR) series report Starcevich et al.
-#'   (2017) for background on how and under what circumstances to use the trend
-#'   analysis methods. Example analyses are provided using the tools offered in
-#'   thte TrendNPS R package.
+#' @section Description: The TrendNPS package provides trend analysis tools for 
+#'   complex survey designs. Please refer to the accompanying National Park 
+#'   Service Natural Resource Report (NRR) series report Starcevich et al. 
+#'   (2017) and Starcevich et al. (2018) for background on how and under what
+#'   circumstances to use the trend analysis methods. Example analyses are
+#'   provided using the tools offered in the TrendNPS R package.
 #' 
 #' @section TrendNPS functions:
 #' \code{TrendNPS_Cont}, 
+#' \code{TrendNPS_Count},
+#' \code{TrendNPS_Binary},
 #' \code{LinearizationVar_StRS}, 
 #' \code{LinearizationVar}, 
 #' \code{PWIGLS_ALL}

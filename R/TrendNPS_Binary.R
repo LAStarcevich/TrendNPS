@@ -2,7 +2,7 @@
 #' 
 #' @title Trend for Binary Outcomes from Complex Survey Designs
 #'   
-#' @description \code{TrendNPS_Cont} fits trend models of binary outcomes 
+#' @description \code{TrendNPS_Binary} fits trend models of binary outcomes 
 #  for four approaches:
 #'   
 #'   \enumerate{ \item the unreplicated generalized linear mixed model with 
@@ -11,9 +11,9 @@
 #'   
 #'   \item simple linear regression of annual design-based estimates ("SLRDB");
 #'   
-#'   \item weighted linear regression of annual design-based estimates (WLRDB);
+#'   \item weighted linear regression of annual design-based estimates ("WLRDB");
 #'   
-#'   \item and probability-weighted iterative generalized least squares (PWIGLS) 
+#'   \item and probability-weighted iterative generalized least squares ("PWIGLS") 
 #    for 6 types of scaling.
 #'   
 #'   } Fixed effects structure includes a year term for trend estimation and an 
@@ -69,15 +69,11 @@
 #'   sampling.
 #'   
 #' @return A list containing three or four elements, depending on the specified trend method. 
-#'   The first element of the list contains a data frame containing the estimated intercept,  
-#'   trend estimate, trend standard error, estimated variance components, and degrees of freedom  
-#'   used for trend testing and confidence intervals construction.
-#'   
-#'   The contents of the first list element, ModelEstimates, are:
+#'   The first element of the list, ModelEstimates, contains a data frame with the trend model output:
 #'   
 #'   \tabular{rl}{
 #'   
-#'   \code{mu}      \tab	Estimated intercept from the trend model/ \cr
+#'   \code{mu}      \tab	Estimated intercept from the trend model. \cr
 #'   \code{trend}   \tab	Estimated trend of the outcome \code{Y} on the link function scale from the trend model.  \cr
 #'   \code{SEtrend} \tab	Estimated standard error of the trend estimate. \cr
 #'   \code{sig2a}   \tab	Estimated site-to-site variation. \cr
@@ -211,7 +207,7 @@
 #'   Report NPS/xxxx/NRR-2017/xxxx. National Park Service, Fort Collins, 
 #'   Colorado.
 
-#'   R. Wolfinger. (1993). Laplace's approximation for nonlinear mixed models. 
+#'   R. Wolfinger. (1993). Laplace’s approximation for nonlinear mixed models. 
 #'   Biometrika 80(4): 791-795. 
 #'   
 #' @seealso \code{lme4}, \code{lmerTest}, \code{spsurvey}
@@ -233,7 +229,7 @@
 #' TrendAcro_PO_StRS = TrendNPS_Binary(alpha=0.1,
 #' dat=Cover_Acro,method="PO",slope=TRUE,type=NA,stratum="Park",Y="Y",
 #' stage1wt="wgt",stage2wt="PanelWt",str1prop=0.13227) 
-#'
+
 #' # $ModelEstimates
 #' #           mu    trend    SEtrend     sig2a      sig2t       sigat     sig2b
 #' #   -0.2992415 0.221928 0.09341594 0.2867116 0.01394005 -0.04732509 0.2411157
@@ -253,9 +249,7 @@
 #' dat=Cover_Acro,method="SLRDB",slope=TRUE,type=NA,stratum="Park",Y="Y",
 #' lat="Lat",long="Long",stage1wt="wgt",stage2wt="PanelWt",
 #' str1prop=0.13227) 
-#' 
-#' # TrendAcro_SLRDB_StRS
-#' 
+#' TrendAcro_SLRDB_StRS
 #' # $ModelEstimates
 #' #           mu    trend    SEtrend sig2a sig2t sigat sig2b
 #' #   -0.9909923 0.211127 0.08966504     0     0     0     0
@@ -279,24 +273,27 @@
 #' #   2014 0.4954618 0.06389670     6 -0.2939231
 #' #   2015 0.4794624 0.04936033     7 -0.5690937
 #' 
-#' # Plot trend on log-odds scale
 #' num <- TrendAcro_SLRDB_StRS$DBests$Est.Mean
-#' denom <- 1-TrendAcro_SLRDB_StRS$DBests$Est.Mean#' 
-#' TrendAcro_SLRDB_StRS$DBests$LogOdds = num / denom
+#' denom <- 1-TrendAcro_SLRDB_StRS$DBests$Est.Mean 
+#' RrendAcro_SLRDB_StRS$DBests$LogOdds = num / denom
 #' plot(TrendAcro_SLRDB_StRS$DBests$Year,
 #'      TrendAcro_SLRDB_StRS$DBests$LogOdds,
-#'      xlab="Year", ylab="Odd ratio of cover proportion")
+#'      xlab="Year", ylab="Odds ratio of cover proportion")
 #' lines(2008:2015, exp(-0.9909923 + 0.211127*(0:7)), col=2)
-#' 
+
 #' # Plot trend on proportional cover scale
-#' expit <- function(x){
+#' expit <- function(x) {
 #'   y <- 1 / (1 + exp(-x))
 #'   return(y)
 #' }
+#' 
+#' # Plot trend on proportional cover scale
 #' plot(TrendAcro_SLRDB_StRS$DBests$Year,
-#'      TrendAcro_SLRDB_StRS$DBests$Est.Mean,
-#'      xlab="Year", ylab="Cover proportion")
+#' 		TrendAcro_SLRDB_StRS$DBests$Est.Mean, 
+#' 		xlab="Year", ylab="Cover proportion")
 #' lines(2008:2015, expit(-0.9909923 + 0.211127*(0:7)), col=2)
+
+
 TrendNPS_Binary<-function(alpha,dat,method,slope=TRUE,type=NA,stratum=NA,Y,lat=NA,long=NA,stage1wt=NA,stage2wt=NA,str1prop=NA,nbhd=TRUE) {
 
 # dat = data set for trend analysis
@@ -341,7 +338,8 @@ WYears = sort(unique(dat$WYear))
 mb = length(WYears)
 
 # Assign stratum
-if(!is.na(stratum)) dat$Stratum <- dat[,stratum]
+if(!is.na(stratum)) dat$Stratum <- as.factor(dat[,stratum])
+dat$Y <- dat[,Y]
 
 ############################################################################################
 # METHOD PO: Piepho & Ogutu (2002) linear mixed model 
@@ -427,10 +425,6 @@ if(method %in% c("SLRDB","WLRDB")) {
 	MeanEsts$WYear = WYears
 
 # calculate trend in logged mean over time
-	logit <- function(x){
-	  y <- log(x / (1 - x))
-	  return(y)
-	}
 	if(method=="SLRDB")  fit<-lm(logit(Est.Mean) ~ WYear, data=MeanEsts)
 	if(method=="WLRDB")  fit<-lm(logit(Est.Mean) ~ WYear, weights=1/(MeanEsts$SE^2), data=MeanEsts)
 

@@ -2,7 +2,7 @@
 #' 
 #' @title Trend for Count Outcomes from Complex Survey Designs
 #'   
-#' @description \code{TrendNPS_Cont} fits trend models of count outcomes 
+#' @description \code{TrendNPS_Count} fits trend models of count outcomes 
 #  for four approaches:
 #'   
 #'   \enumerate{ \item the unreplicated generalized linear mixed model with 
@@ -11,9 +11,9 @@
 #'   
 #'   \item simple linear regression of annual design-based estimates ("SLRDB");
 #'   
-#'   \item weighted linear regression of annual design-based estimates (WLRDB);
+#'   \item weighted linear regression of annual design-based estimates ("WLRDB");
 #'   
-#'   \item and probability-weighted iterative generalized least squares (PWIGLS) 
+#'   \item and probability-weighted iterative generalized least squares ("PWIGLS") 
 #    of predictions from a LaPlace approximation for 6 types of scaling.
 #'   
 #'   } Fixed effects structure includes a year term for trend estimation and an 
@@ -69,15 +69,11 @@
 #'   sampling.
 #'   
 #' @return A list containing three or four elements, depending on the specified trend method. 
-#'   The first element of the list contains a data frame containing the estimated intercept,  
-#'   trend estimate, trend standard error, estimated variance components, and degrees of freedom  
-#'   used for trend testing and confidence intervals construction.
-#'   
-#'   The contents of the first list element, ModelEstimates, are:
+#'   The first element of the list, ModelEstimates, contains a data frame with the trend model output:
 #'   
 #'   \tabular{rl}{
 #'   
-#'   \code{mu}      \tab	Estimated intercept from the trend model/ \cr
+#'   \code{mu}      \tab	Estimated intercept from the trend model. \cr
 #'   \code{trend}   \tab	Estimated trend of the outcome \code{Y} on the link function scale from the trend model.  \cr
 #'   \code{SEtrend} \tab	Estimated standard error of the trend estimate. \cr
 #'   \code{sig2a}   \tab	Estimated site-to-site variation. \cr
@@ -216,8 +212,8 @@
 #'   (2017). Trend Estimation for Complex Survey Designs. Natural Resource 
 #'   Report NPS/xxxx/NRR-2017/xxxx. National Park Service, Fort Collins, 
 #'   Colorado.
-#'
-#'   R. Wolfinger. (1993). Laplace's approximation for nonlinear mixed models. 
+
+#'   R. Wolfinger. (1993). Laplace’s approximation for nonlinear mixed models. 
 #'   Biometrika 80(4): 791-795. 
 #'   
 #' @seealso \code{lme4}, \code{lmerTest}, \code{spsurvey}
@@ -236,23 +232,22 @@
 #' ###########################
 #' # Example 1: Trend analysis of annual site-level counts of leather sea stars
 #' # with the PO approach: stratification and full random effects model.
-#' TrendSeastar_PO_StRS = TrendNPS_Count(alpha=0.1,
-#' dat=Seastar,method="PO",slope=TRUE,type=NA,stratum="Park",Y="Count",
+#' TrendSeaster_PO_StRS = TrendNPS_Count(alpha=0.1,
+#' dat=Seastar,method="PO",slope=TRUE,type=NA,stratum="Park",Y="Y",
 #' stage1wt="wgt",stage2wt="PanelWt",str1prop=0.13227) 
-#'
-#' TrendSeastar_PO_StRS
-#'
+
 #' # $ModelEstimates
-#' #         mu      trend    SEtrend     sig2a       sig2t        sigat      sig2b
-#' # 1 1.470861 0.04604501 0.04518648 0.2485275 0.001259157 -0.007764208 0.03724508
-#' 
+#' #         mu      trend    SEtrend    sig2a       sig2t        sigat      sig2b
+#' #   1.470868 0.04604476 0.04518698 0.248528 0.001259151 -0.007764177 0.03724626
+#' # 
 #' # $TrendTest
-#' #        trend    SEtrend z-stat    pvalue
-#' # 1 0.04604501 0.04518648  1.019 0.3082031
-#' 
+#' #        trend    SEtrend   z-stat    pvalue
+#' #   0.04604476 0.04518698 1.018983 0.3082111
+#' # 
 #' # $TrendCI
-#' #   Annual Pct Change    CI low   CI high
-#' # 1        0.04712154 -0.027884 0.1279143 
+#' #  Annual Pct Change      CI low   CI high
+#' #         0.04712128 -0.02788504 0.1279149
+#' 
 #' 
 #' # Example 2: Trend analysis of annual site-level counts of leather sea stars
 #' # with the SLRDB approach for stratification.
@@ -260,7 +255,7 @@
 #' dat=Seastar,method="SLRDB",slope=TRUE,type=NA,stratum="Park",Y="Count",
 #' lat="Lat",long="Long", stage1wt="wgt",stage2wt="PanelWt",str1prop=0.13227) 
 #' 
-#' TrendSeastar_SLRDB_StRS
+#' # TrendSeastar_SLRDB_StRS
 #' # $ModelEstimates
 #' #        mu     trend    SEtrend sig2a sig2t sigat sig2b
 #' #  2.687804 0.0317377 0.04920822     0     0     0     0
@@ -284,10 +279,11 @@
 #' #   2015 11.99475 2.917410     6 -0.39376154
 #' 
 #' # Plot trend on original scale
-#' plot(TrendSeastar_SLRDB_StRS$DBests$Year,
-#'      TrendSeastar_SLRDB_StRS$DBests$Est.Mean, 
-#'      xlab="Year", ylab="Mean Sea Star Counts")
+#' plot(TrendSeastar_SLRDB_StRS$DBests$Year,TrendSeastar_SLRDB_StRS$DBests$Est.Mean, xlab="Year", ylab="Mean Sea Star Counts")
 #' lines(2009:2015, exp(2.687804 + 0.0317377*(0:6)), col=2)
+#' 
+#' 
+#' 
 TrendNPS_Count<-function(alpha,dat,method,slope=TRUE,type=NA,stratum=NA,Y,lat=NA,long=NA,stage1wt=NA,stage2wt=NA,str1prop=NA,nbhd=TRUE) {
 
 # Calculate sample sizes

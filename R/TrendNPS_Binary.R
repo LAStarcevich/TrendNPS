@@ -419,8 +419,8 @@ if(method %in% c("SLRDB","WLRDB")) {
 	MeanEsts$WYear = WYears
 
 # calculate trend in logged mean over time
-	if(method=="SLRDB")  fit<-lm(logit(Est.Mean) ~ WYear, data=MeanEsts)
-	if(method=="WLRDB")  fit<-lm(logit(Est.Mean) ~ WYear, weights=1/(MeanEsts$SE^2), data=MeanEsts)
+	if(method=="SLRDB")  fit<-lm(TrendNPS::logit(Est.Mean) ~ WYear, data=MeanEsts)
+	if(method=="WLRDB")  fit<-lm(TrendNPS::logit(Est.Mean) ~ WYear, weights=1/(MeanEsts$SE^2), data=MeanEsts)
 
   	mu <- coef(fit)[1]				# mu
 	trend<- coef(fit)[2]				# slope

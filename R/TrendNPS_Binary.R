@@ -2,8 +2,8 @@
 #' 
 #' @title Trend for Binary Outcomes from Complex Survey Designs
 #'   
-#' @description \code{TrendNPS_Binary} fits trend models of binary outcomes 
-#  for four approaches:
+#' @description \code{TrendNPS_Binary} fits trend models of binary outcomes for
+#'   four approaches:
 #'   
 #'   \enumerate{ \item the unreplicated generalized linear mixed model with 
 #'   variance components as specified by Piepho and Ogutu (2002) that does 
@@ -280,13 +280,7 @@
 #'      TrendAcro_SLRDB_StRS$DBests$LogOdds,
 #'      xlab="Year", ylab="Odds ratio of cover proportion")
 #' lines(2008:2015, exp(-0.9909923 + 0.211127*(0:7)), col=2)
-
-#' # Plot trend on proportional cover scale
-#' expit <- function(x) {
-#'   y <- 1 / (1 + exp(-x))
-#'   return(y)
-#' }
-#' 
+#'
 #' # Plot trend on proportional cover scale
 #' plot(TrendAcro_SLRDB_StRS$DBests$Year,
 #' 		TrendAcro_SLRDB_StRS$DBests$Est.Mean, 

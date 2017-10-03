@@ -2,8 +2,8 @@
 #' 
 #' @title Trend for Count Outcomes from Complex Survey Designs
 #'   
-#' @description \code{TrendNPS_Count} fits trend models of count outcomes 
-#  for four approaches:
+#' @description \code{TrendNPS_Count} fits trend models of count outcomes for
+#'   four approaches:
 #'   
 #'   \enumerate{ \item the unreplicated generalized linear mixed model with 
 #'   variance components as specified by Piepho and Ogutu (2002) that does 

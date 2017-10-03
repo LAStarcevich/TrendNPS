@@ -21,7 +21,7 @@
 #' y <- expit(x)
 #' 
 #' y
-#' # 0.3,0.2,0.9
+#' # 0.3 0.2 0.9
 expit <- function(x) {
   y <- 1 / (1 + exp(-x))
   return(y)

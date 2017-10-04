@@ -28,7 +28,7 @@ NPS lake chemistry monitoring data for all sites.
 \references{
 Heard, A. M., L. A. H. Starcevich, J. O. Sickman, M. Goldin Rose,
   and D. W. Schweizer. 2012. Sierra Nevada Network lake monitoring protocol.
-  Natural Resource Report NPS/SIEN/NRR-2012/551. National Park Service, Fort
+  Natural Resource Report \cr NPS/SIEN/NRR-2012/551. National Park Service, Fort
   Collins, Colorado.
 }
 \keyword{datasets}

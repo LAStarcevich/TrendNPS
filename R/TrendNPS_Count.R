@@ -63,8 +63,8 @@
 #' @param str1prop	Proportion of the first stratum in the population in a 
 #'   two-level stratification variable.
 #'   
-#' @param nbhd	Logical indictor for using the neighborhood variance estimator 
-#'   when the \code{method="WLRDB"}.  If \code{FALSE}, \code{"WLRDB"} calculates
+#' @param nbhd	Logical indictor for the neighborhood variance estimator 
+#'   when \code{method="WLRDB"}.  If \code{FALSE}, \code{"WLRDB"} calculates
 #'   the design-based mean estimate's standard error assuming independent random
 #'   sampling.
 #'   
@@ -98,8 +98,7 @@
 #'   
 #'   \code{Year}      \tab	Year of survey. \cr
 #'   \code{Est.Mean}   \tab	Design-based estimate of the mean of the outcome of interest. \cr
-#'   \code{SE} \tab	   Estimated standard error of design-based mean estimate via neighborhood 
-#'   variace estimator if \code{nbhd = TRUE}. \cr
+#'   \code{SE} \tab	   Estimated standard error of design-based mean estimate if \code{nbhd=TRUE}. \cr
 #'   \code{WYear}   \tab	WYear variable. \cr
 #'   \code{Resid}     \tab	Residuals from the linear model fit. \cr
 #'   
@@ -134,7 +133,7 @@
 #'   below.
 #'   
 #'   Variables \code{stage1wt} and \code{stage2wt} must be specified for all 
-#'   methods except the unweighted \code{method="PO"}.
+#'   methods except unweighted \code{method="PO"}.
 #'   
 #' @section Data frame \code{dat}:
 #'   
@@ -165,12 +164,12 @@
 #'   
 #'   \tabular{rl}{
 #'   
-#'   \code{"Aonly"} \tab Probability weighting but no scaling at either stage. \cr
-#'   \code{"A"}     \tab Scaling for panel weights with the mean site-level design weight.  \cr
-#'   \code{"AI"}    \tab Scaling for panel weights with the mean site-level design weight, but no site-level scaling.  \cr
-#'   \code{"B"}     \tab Scaling for panel weights with the effective mean site-level design weight.  \cr
-#'   \code{"BI"}    \tab Scaling for panel weights with the effective mean site-level design weight, but no site-level scaling.  \cr
-#'   \code{"C"}     \tab Scaling only at the year level with the inverse of the average year-level weight. \cr
+#'   \code{"Aonly"} \tab Probability weighting but no scaling at either stage \cr
+#'   \code{"A"}     \tab Panel-weights scaling with mean site-level design weight  \cr
+#'   \code{"AI"}    \tab Panel-weights scaling with mean site-level design weight, but no site-level scaling  \cr
+#'   \code{"B"}     \tab Panel-weights scaling with effective mean site-level design weight  \cr
+#'   \code{"BI"}    \tab Panel-weights scaling with effective mean site-level design weight, but no site-level scaling  \cr
+#'   \code{"C"}     \tab Year-level scaling only with inverse of the average year-level weight \cr
 #'   
 #'   }
 #'   

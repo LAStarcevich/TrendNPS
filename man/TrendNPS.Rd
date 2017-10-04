@@ -21,11 +21,11 @@ designs.
 
 \section{TrendNPS functions}{
 
-\code{TrendNPS_Cont}, 
-\code{TrendNPS_Count},
-\code{TrendNPS_Binary},
-\code{LinearizationVar_StRS}, 
-\code{LinearizationVar}, 
+\code{TrendNPS_Cont}, \cr
+\code{TrendNPS_Count}, \cr
+\code{TrendNPS_Binary}, \cr
+\code{LinearizationVar_StRS}, \cr 
+\code{LinearizationVar}, \cr 
 \code{PWIGLS_ALL}
 }
 

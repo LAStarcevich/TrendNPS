@@ -49,12 +49,12 @@ Calculates the probability-weighted iterative generalized least squares
   
   \tabular{ll}{
   
-  \code{"Aonly"} \tab probability weighting but no scaling at either stage \cr
-  \code{"A"}     \tab scaling for panel weights with the mean site-level design weight  \cr
-  \code{"AI"}    \tab scaling for panel weights with the mean site-level design weight, but no site-level scaling  \cr
-  \code{"B"}     \tab scaling for panel weights with the effective mean site-level design weight  \cr
-  \code{"BI"}    \tab scaling for panel weights with the effective mean site-level design weight, but no site-level scaling  \cr
-  \code{"C"}     \tab scaling only at the year level with the inverse of the average year-level weight \cr
+  \code{"Aonly"} \tab Probability weighting but no scaling at either stage \cr
+  \code{"A"}     \tab Panel-weights scaling with mean site-level design weight  \cr
+  \code{"AI"}    \tab Panel-weights scaling with mean site-level design weight, but no site-level scaling  \cr
+  \code{"B"}     \tab Panel-weights scaling with effective mean site-level design weight  \cr
+  \code{"BI"}    \tab Panel-weights scaling with effective mean site-level design weight, but no site-level scaling  \cr
+  \code{"C"}     \tab Year-level scaling only with inverse of the average year-level weight \cr
   
   }
 }

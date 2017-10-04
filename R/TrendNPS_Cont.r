@@ -134,7 +134,7 @@
 #'   a value for \code{type}.  See section "Options for variable \code{type}"
 #'   below.
 #'   
-#'   Variables \code{stage1wt} and \code{stage2wt} must be specified for all 
+#'   Specify \code{stage1wt} and \code{stage2wt} for all 
 #'   methods except unweighted \code{method="PO"}.
 #'   
 #' @section Data frame \code{dat}:

@@ -65,8 +65,13 @@ PWIGLS_ALL<-function(Z,dat,stage1wt,stage2wt,type,stratum,slope) {
 #' @examples 
 #' \dontrun{
 #' #  ---- Read example data set.
-#' 	fit<-PWIGLS_ALL(Z=getME(fit_PO,"Z"),dat=dat,stage1wt=stage1wt,stage2wt=stage2wt,type=type,
-#'       stratum=stratum,slope=slope)
+#' 	fit<-PWIGLS_ALL(Z=getME(fit_PO,"Z"),
+#' 	                dat=dat,
+#' 	                stage1wt=stage1wt,
+#' 	                stage2wt=stage2wt,
+#' 	                type=type,
+#'                  stratum=stratum,
+#'                  slope=slope)
 #' }
 #' 
 #' 

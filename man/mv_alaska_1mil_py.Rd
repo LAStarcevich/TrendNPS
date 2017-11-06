@@ -4,12 +4,15 @@
 \name{mv_alaska_1mil_py}
 \alias{mv_alaska_1mil_py}
 \title{Alaska Coastline 1:1,000,000 - Digital Chart of the World (DCW).}
-\format{A shapefile with 811 constituent polygons. 
+\format{A shapefile with 811 constituent polygons. To use, run
+
+\code{AK <- rgdal::readOGR(paste0(find.package("TrendNPS"),"/extdata"),"mv_alaska_1mil_py")}.
 
 \describe{The shapefile contains the polygonal extent of the US state of Alaska.  This coverage was taken 
 from ESRI's Digital Chart of the World and clipped to the State of Alaska. The data was extracted from 
 the PONET coverage from each tile. For more information, see the DCW Data Dictionary.   
-The attribute table contains the following variables, whose rows contain
+
+The attribute table contains the following variables, whose rows 
 contain the same data:
 
 \itemize{ 
@@ -19,9 +22,6 @@ contain the same data:
   \item POLNTYPE. Uniformly 0.0000 throughout.  Unknown meaning.  
 }
 }}
-\usage{
-checkmecheckme
-}
 \description{
 Alaska Coastline 1:1,000,000 - Digital Chart of the World (DCW).
 }
@@ -29,10 +29,7 @@ Alaska Coastline 1:1,000,000 - Digital Chart of the World (DCW).
 Alaska Department of Natural Resources, Information Resource Management.
 
 Accessed January 13, 2017 and available at \url{http://asgdc.alaska.gov#2972}.
-  available at: 
-  \url{http://portal.aoos.org/gulf-of-alaska.php#metadata/53c052b6-8874-46d1-b40a-acc615a3879a/project/files}.
 }
 \author{
 Leigh Ann Starcevich of Western EcoSystems Technology, Inc.
 }
-\keyword{datasets}

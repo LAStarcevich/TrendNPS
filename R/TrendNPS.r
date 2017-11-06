@@ -194,9 +194,9 @@ NULL
 #' Alaska Coastline 1:1,000,000 - Digital Chart of the World (DCW).
 #' 
 #' @name mv_alaska_1mil_py
-#' @docType shapefile
-#' @usage data(Cover_Acro)
-#' @format A shapefile with 811 constituent polygons. with 1794 rows and 10 variables.
+#' @docType data
+#' @usage checkmecheckme
+#' @format A shapefile with 811 constituent polygons. 
 #' 
 #' \describe{The shapefile contains the polygonal extent of the US state of Alaska.  This coverage was taken 
 #' from ESRI's Digital Chart of the World and clipped to the State of Alaska. The data was extracted from 

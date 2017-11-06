@@ -190,3 +190,33 @@ NULL
 #'   \url{http://portal.aoos.org/gulf-of-alaska.php#metadata/53c052b6-8874-46d1-b40a-acc615a3879a/project/files}.
 #'   
 NULL 
+
+#' Alaska Coastline 1:1,000,000 - Digital Chart of the World (DCW).
+#' 
+#' @name mv_alaska_1mil_py
+#' @docType shapefile
+#' @usage data(Cover_Acro)
+#' @format A shapefile with 811 constituent polygons. with 1794 rows and 10 variables.
+#' 
+#' \describe{The shapefile contains the polygonal extent of the US state of Alaska.  This coverage was taken 
+#' from ESRI's Digital Chart of the World and clipped to the State of Alaska. The data was extracted from 
+#' the PONET coverage from each tile. For more information, see the DCW Data Dictionary.   
+#' The attribute table contains the following variables, whose rows contain
+#' contain the same data:
+#' 
+#' \itemize{ 
+#'   \item TYPE. Uniformly "A" throughout.  Unknown meaning. 
+#'   \item REFRESH_01. Uniformly "2011-03-23" throughout.  Unknown meaning.  
+#'   \item POLNSTAT. Uniformly 0.0000 throughout.  Unknown meaning.  
+#'   \item POLNTYPE. Uniformly 0.0000 throughout.  Unknown meaning.  
+#' }
+#' }
+#' @keywords datasets
+#' @author Leigh Ann Starcevich of Western EcoSystems Technology, Inc.
+#' @references Alaska Department of Natural Resources, Information Resource Management.
+#' 
+#' Accessed January 13, 2017 and available at \url{http://asgdc.alaska.gov#2972}.
+#'   available at: 
+#'   \url{http://portal.aoos.org/gulf-of-alaska.php#metadata/53c052b6-8874-46d1-b40a-acc615a3879a/project/files}.
+#'   
+NULL 

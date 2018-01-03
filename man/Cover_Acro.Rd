@@ -4,7 +4,7 @@
 \name{Cover_Acro}
 \alias{Cover_Acro}
 \title{\emph{Acrosiphonia} binary cover data.}
-\format{A data frame with 1794 rows and 10 variables.
+\format{A data frame with 1794 rows and 11 variables.
 
 \describe{The file contains binary indicators of \emph{Acrosiphonia} cover
 collected between 2009 and 2015 across two parks, Katmai National Park (KATM)

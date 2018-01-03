@@ -4,7 +4,7 @@
 \name{Seastar}
 \alias{Seastar}
 \title{Seastar count data.}
-\format{A data frame with 65 rows and 8 variables.
+\format{A data frame with 65 rows and 10 variables.
 
 \describe{The file contains counts of \emph{Dermasterias imbricata} (leather
 seastar) collected between 2009 and 2015 across two parks, Katmai National

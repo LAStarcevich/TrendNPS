@@ -130,7 +130,7 @@ NULL
 #' @name Seastar
 #' @docType data
 #' @usage data(Seastar)
-#' @format A data frame with 65 rows and 8 variables.
+#' @format A data frame with 65 rows and 10 variables.
 #' 
 #' \describe{The file contains counts of \emph{Dermasterias imbricata} (leather
 #' seastar) collected between 2009 and 2015 across two parks, Katmai National
@@ -164,7 +164,7 @@ NULL
 #' @name Cover_Acro
 #' @docType data
 #' @usage data(Cover_Acro)
-#' @format A data frame with 1794 rows and 10 variables.
+#' @format A data frame with 1794 rows and 11 variables.
 #' 
 #' \describe{The file contains binary indicators of \emph{Acrosiphonia} cover
 #' collected between 2009 and 2015 across two parks, Katmai National Park (KATM)

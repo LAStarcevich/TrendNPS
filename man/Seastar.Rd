@@ -20,6 +20,8 @@ Network. The variables are as follows:
   \item Long. Site longitude.   
   \item Lat. Site latitude.
   \item Count. Number of sea stars observed.
+  \item wgt. Design weight from the sample draw.
+  \item PanelWt. Weight to account for temporal revisit design given sample inclusion.
 }
 }}
 \usage{

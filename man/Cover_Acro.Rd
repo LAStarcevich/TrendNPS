@@ -22,6 +22,8 @@ are as follows:
   \item Gradient. Site gradient (degrees).
   \item Long. Site longitude.   
   \item Lat. Site latitude.
+  \item wgt. Design weight from the sample draw.
+  \item PanelWt. Weight to account for temporal revisit design given sample inclusion.
 }
 }}
 \usage{

@@ -146,6 +146,8 @@ NULL
 #'   \item Long. Site longitude.   
 #'   \item Lat. Site latitude.
 #'   \item Count. Number of sea stars observed.
+#'   \item wgt. Design weight from the sample draw.
+#'   \item PanelWt. Weight to account for temporal revisit design given sample inclusion.
 #' }
 #' }
 #' @keywords datasets
@@ -180,6 +182,8 @@ NULL
 #'   \item Gradient. Site gradient (degrees).
 #'   \item Long. Site longitude.   
 #'   \item Lat. Site latitude.
+#'   \item wgt. Design weight from the sample draw.
+#'   \item PanelWt. Weight to account for temporal revisit design given sample inclusion.
 #' }
 #' }
 #' @keywords datasets

@@ -134,7 +134,7 @@ NULL
 #' 
 #' \describe{The file contains counts of \emph{Dermasterias imbricata} (leather
 #' seastar) collected between 2009 and 2015 across two parks, Katmai National
-#' Park (KATM) and Kenia Fjords National Park (KEFJ) in the Southwest Alaskan
+#' Park (KATM) and Kenai Fjords National Park (KEFJ) in the Southwest Alaskan
 #' Network. The variables are as follows:
 #' 
 #' \itemize{
@@ -168,7 +168,7 @@ NULL
 #' 
 #' \describe{The file contains binary indicators of \emph{Acrosiphonia} cover
 #' collected between 2009 and 2015 across two parks, Katmai National Park (KATM)
-#' and Kenia Fjords National Park (KEFJ) in the Southwest Alaskan Network. Data
+#' and Kenai Fjords National Park (KEFJ) in the Southwest Alaskan Network. Data
 #' hierarchy includes Elevation class within Quadrat within Site.  The variables
 #' are as follows:
 #' 

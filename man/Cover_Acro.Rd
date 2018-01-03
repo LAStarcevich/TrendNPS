@@ -8,7 +8,7 @@
 
 \describe{The file contains binary indicators of \emph{Acrosiphonia} cover
 collected between 2009 and 2015 across two parks, Katmai National Park (KATM)
-and Kenia Fjords National Park (KEFJ) in the Southwest Alaskan Network. Data
+and Kenai Fjords National Park (KEFJ) in the Southwest Alaskan Network. Data
 hierarchy includes Elevation class within Quadrat within Site.  The variables
 are as follows:
 

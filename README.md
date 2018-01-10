@@ -1,6 +1,6 @@
 # NPSTrend
 
-An R package developed for the National Park Service containing trend analysis tools for 
+An R package developed for the National Park Service with trend analysis tools for 
 complex survey designs.
 
 To utilize, use the `install_github` function from the `devtools` R package.

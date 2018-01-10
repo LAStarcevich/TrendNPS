@@ -6,5 +6,5 @@ To utilize, use the `install_github` function from the `devtools` R package.
 
 ```r
 library(devtools)
-install_github("https://github.com/LAStarcevich/TrendNPS")
+install_github("LAStarcevich/TrendNPS")
 ```
